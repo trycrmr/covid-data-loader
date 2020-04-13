@@ -1,0 +1,24 @@
+{
+  "name": "covid-data-loader",
+  "version": "1.0.0",
+  "description": "A codebase for fetching, transforming, and loading covid datasets",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trycrmr/covid-data-loader"
+  },
+  "main": "index.js",
+  "scripts": {},
+  "keywords": ["COVID-19", "Corona", "Coronavirus", "data", "batch", "loader", "extract", "transform", "load", "fetch", "ETL"],
+  "author": "See contributors",
+  "contributors": [
+    {
+      "name": "Contributors",
+      "url": "https://github.com/trycrmr/covid-data-loader/graphs/contributors"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "axios": "0.19.2",
+    "csvtojson": "2.0.10"
+  }
+}
