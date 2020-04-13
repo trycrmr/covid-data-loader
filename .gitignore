@@ -1,3 +1,7 @@
+# dev directory for dumping local data outputs that are for iterating over, testing, whatever. Easier to view here than viewing output in the terminal.
+dev
+
+## Github Node.js defaults
 # Logs
 logs
 *.log
