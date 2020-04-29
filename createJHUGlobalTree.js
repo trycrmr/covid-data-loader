@@ -56,13 +56,14 @@ exports.create = async (limit = null) => {
 
     jhuData = jhuData.map(thisJhu => thisJhu.data.map(thisRow => {
       thisRow.metric = thisJhu.name === 'confirmed_US' || thisJhu.name === 'confirmed_global' ? 'cases' : 'deaths'
-      if(thisRow.iso2) return {
+      if(thisRow.iso2) return { // indicates US specific cases or deaths spreadsheet
         ...thisRow, 
         continentISO2: globals.countryToContinentISO2[thisRow.iso2], 
         continentName: globals.continentToNameISO2[globals.countryToContinentISO2[thisRow.iso2]],
         countryName: globals.countryToNameISO2[thisRow.iso2],
       }
-      if(thisRow["Country/Region"]) {
+      if(thisRow["Country/Region"]) { // indicates global cases or deaths spreadsheet
+        if(thisRow["Country/Region"] === 'US') return null // US is the only location that has rows in both the US & global spreadsheets. Pull one out. I chose to remove the global US aggregates because I'd prefer to calculate my own aggregates for the US from the county data. 
         let hasMap = Object.entries(globals.countryToNameISO2).find(([, name]) => thisRow["Country/Region"] === name)
         if(hasMap) {
           return {
@@ -79,7 +80,7 @@ exports.create = async (limit = null) => {
           }
         }
       } 
-    })).flat()
+    })).flat().filter(el => el) // Filter out the US Global stub (it's a falsey value). We already have a row for the US calculated with the US county aggregates.
 
     const newJHUData = jhuData
     .map(thisRow => { return { ...thisRow, location: [ thisRow.continentName ] }})
@@ -208,7 +209,7 @@ exports.create = async (limit = null) => {
 // ${Object.entries(location.subregions).length} (subregion count)
 // ${!location.rolledUp} & ${Object.entries(location.subregions).every(([key, value]) => value.rolledUp)} (is not rolled up & subregions are rolled up)`)
 // ^Leaving in for debugging purposes
-      if(!location.subregions) {
+      if(Object.keys(location.subregions).length === 0) {
         let derivedMetrics = calculatedDerivedMetrics(sortObj(location.totals.daily.cases), sortObj(location.totals.daily.deaths), location.name)
         location.totals.daily = { ...location.totals.daily, ...derivedMetrics }
         location.rolledUp = true
