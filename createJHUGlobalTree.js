@@ -37,7 +37,7 @@ exports.create = async (limit = null) => {
       return newObj
     }
 
-    const convertAllKeysThatAreDatesToUnixTimestamps = (obj) => {
+    const convertAllKeysThatAreDatesToUnixTimestamps = (obj) => { // Lol long name.
       return Object.entries(obj).reduce((acc, curr, currIdx, origArr) => {
         let [key, value] = curr
         parsedKey = new Date(key)
@@ -51,33 +51,65 @@ exports.create = async (limit = null) => {
       }, {})
     }
 
-    Date.prototype.getWeekISO = function(dowOffset = 1) {
-      /*getWeek() was developed by Nick Baicoianu at MeanFreePath: http://www.meanfreepath.com */
+    Date.prototype.getWeek = (dateObj, dowOffset = 1) => { // https://stackoverflow.com/a/9047794/5935694 . Also, dowOffset ("Date of week offset", I think) is set to Monday to align with the ISO 8601 standard. https://en.wikipedia.org/wiki/Week#Week_numbering
       // dowOffset = typeof(dowOffset) == 'number' ? dowOffset : 0 //default dowOffset to zero
       // console.info(dowOffset)
-      let newYear = new Date(this.getFullYear(),0,1)
+      let newYear = new Date(dateObj.getFullYear(),0,1)
       let day = newYear.getDay() - dowOffset //the day of week the year begins on
       day = (day >= 0 ? day : day + 7)
-      let daynum = Math.floor((this.getTime() - newYear.getTime() - 
-      (this.getTimezoneOffset()-newYear.getTimezoneOffset())*60000)/86400000) + 1
+      let daynum = Math.floor((dateObj.getTime() - newYear.getTime() - (dateObj.getTimezoneOffset()-newYear.getTimezoneOffset())*60000)/86400000) + 1
+
+      const setToMonday = ( date ) => { // start of week
+        let day = date.getDay() || 7;  
+        if( day !== 1 ) 
+            date.setHours(-24 * (day - 1)); 
+        return date;
+      }
+      const setToSunday = ( date ) => { // end of week
+        let day = date.getDay()  
+        if( day !== 0 ) 
+            date.setHours(24 * (7 - day)); 
+        return date;
+      }
+      let weekStart = setToMonday(new Date(+(dateObj)))
+      let weekEnd = setToSunday(new Date(+(dateObj)))
+
       let weeknum
       //if the year starts before the middle of a week
       if(day < 4) {
         weeknum = Math.floor((daynum+day-1)/7) + 1
         if(weeknum > 52) {
-          nYear = new Date(this.getFullYear() + 1,0,1)
+          nYear = new Date(dateObj.getFullYear() + 1,0,1)
           nday = nYear.getDay() - dowOffset
           nday = nday >= 0 ? nday : nday + 7
           /*if the next year starts before the middle of
             the week, it is week #1 of that year*/
           weeknum = nday < 4 ? 1 : 53
-          return `${weeknum === 53 ? newYear.getFullYear() : newYear.getFullYear() + 1}W${weeknum}`
+          // return `${weeknum === 53 ? newYear.getFullYear() : newYear.getFullYear() + 1}W${weeknum}`
+          return {
+            week: weeknum,
+            year: weeknum === 53 ? newYear.getFullYear() : newYear.getFullYear() + 1,
+            start: weekStart,
+            end: weekEnd
+          }
         } else {
-          return `${newYear.getFullYear()}W${weeknum}`
+          return {
+            week: weeknum,
+            year: newYear.getFullYear(),
+            start: weekStart,
+            end: weekEnd
+          }
+          // return `${newYear.getFullYear()}W${weeknum}`
         }
       } else {
         weeknum = Math.floor((daynum+day-1)/7)
-        return `${newYear.getFullYear()}W${weeknum}`
+        return {
+          week: weeknum,
+          year: newYear.getFullYear(),
+          start: weekStart,
+          end: weekEnd
+        }
+        // return `${newYear.getFullYear()}W${weeknum}`
       }
     }
     // End utility functions
@@ -139,7 +171,10 @@ exports.create = async (limit = null) => {
             rolledUp: false,
             name: curr.location[i],
             subregions: {},
-            totals: { daily: { cases: {}, deaths: {} } }
+            totals: { 
+              daily: { cases: {}, deaths: {} },
+              cases: {}, deaths: {} // replacing the "daily" object, eventually
+            }
           }
           superRegions.push(superRegions[i].subregions[curr.location[i]])
         } else {
@@ -147,7 +182,34 @@ exports.create = async (limit = null) => {
         }
         if(i + 1 === curr.location.length) { // If this is the last location (i.e. the most granular location data we have), update the appropriate metric.
           superRegions[i].subregions[curr.location[i]].totals.daily[curr.metric] = limiter(convertAllKeysThatAreDatesToUnixTimestamps(removeNonDateKeys(curr)), limit)
+          superRegions[i].subregions[curr.location[i]].totals[curr.metric] = Object.entries(superRegions[i].subregions[curr.location[i]].totals.daily[curr.metric])
+          .reduce((acc, curr, currIdx, origArr) => {
+            let [unixTimestamp, metricCount] = curr
+            // console.info(unixTimestamp, metricCount)
+            let date = new Date(+(unixTimestamp))
+            let thisWeeksMetadata = date.getWeek(new Date(+(date))) // Get week is not a part of native JavaScript. See utility functions.
+            acc.daily = acc.daily ? acc.daily : {}
+            acc.weekly = acc.weekly ? acc.weekly : {}
+            // console.info(date.getMonth(), thisWeeksMetadata, acc, date.getFullYear(), date)
+
+            acc.daily[date.getFullYear()] = acc.daily[date.getFullYear()] ? acc.daily[date.getFullYear()] : {}
+            acc.daily[date.getFullYear()][date.getMonth()] = acc.daily[date.getFullYear()][date.getMonth()] ? acc.daily[date.getFullYear()][date.getMonth()] : {}
+            acc.daily[date.getFullYear()][date.getMonth()][unixTimestamp] = metricCount 
+            acc.weekly[thisWeeksMetadata.year] = acc.weekly[thisWeeksMetadata.year] ? acc.weekly[thisWeeksMetadata.year] : {}
+            acc.weekly[thisWeeksMetadata.year][thisWeeksMetadata.week] = acc.weekly[thisWeeksMetadata.year][thisWeeksMetadata.week] ? acc.weekly[thisWeeksMetadata.year][thisWeeksMetadata.week] : {}
+            acc.weekly[thisWeeksMetadata.year][thisWeeksMetadata.week][unixTimestamp] = metricCount
+            // ^ Stored as two separate trees because the year a day is in can be different from the year a week is in. Example: The week with January 3rd in it is sometimes, technically, the 53rd week of the previous year. But January 3rd's "year" is the current year.
+
+            acc.weekly[thisWeeksMetadata.year][thisWeeksMetadata.week].start = thisWeeksMetadata.start
+            acc.weekly[thisWeeksMetadata.year][thisWeeksMetadata.week].end = thisWeeksMetadata.end
+
+            // acc.weekYear = date.getWeek().year // This can differ from the actual year. Like lol ikr!?!? https://en.wikipedia.org/wiki/ISO_8601#Week_dates
+            return acc
+          }, {})
+          // console.info(superRegions[i].subregions[curr.location[i]].name, JSON.stringify(superRegions[i].subregions[curr.location[i]]))
+          // console.info(' ')
         }
+        // console.info(' ')
         i++
       }
       return acc
@@ -298,7 +360,7 @@ exports.create = async (limit = null) => {
     */
 
     // return jhuDataAggregated
-    console.info(JSON.stringify(jhuDataAggregated))
+    console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Europe"].subregions["Albania"]))
   } catch(err) {
     console.error(err)
     return err
