@@ -152,6 +152,48 @@ exports.create = async (limit = null) => {
       } 
     })).flat().filter(el => el) // Filter out the US Global stub (it's a falsey value). We already have a row for the US calculated with the US county aggregates.
 
+    const getTimeTree = arrOfUnixTimestamps => { // An array of unix timestamps taken from the JHU data, ex. Object.keys(convertAllKeysThatAreDatesToUnixTimestamps(jhuData[0]))
+      return arrOfUnixTimestamps.reduce((acc, current, currIdx, origArr) => {
+        let unixTimestamp = current
+        let date = new Date(+(unixTimestamp))
+        let dateYear = date.getFullYear()
+        let dateMonth = date.getMonth() + 1
+        let thisWeeksMetadata = date.getWeek(new Date(+(date))) // Get week is not a part of native JavaScript. See utility functions.
+        // console.info(date,dateYear,dateMonth,thisWeeksMetadata.week,thisWeeksMetadata.start,thisWeeksMetadata.end)
+        let defaultObj = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }
+        // acc.daily = acc.daily ? acc.daily : { ...defaultObj }
+        // acc.weekly = acc.weekly ? acc.weekly : { ...defaultObj }
+        // console.info(dateMonth, thisWeeksMetadata, acc, dateYear, date)
+        // acc.daily.subNodes[dateYear] = acc.daily.subNodes[dateYear] ? acc.daily.subNodes[dateYear] : { ...defaultObj }
+        if(!(dateYear in acc.daily.subNodes)) {acc.daily.subNodes[dateYear] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
+        if(!(dateMonth in acc.daily.subNodes[dateYear].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }}
+        // acc.daily.subNodes[dateYear].subNodes[dateMonth] = acc.daily.subNodes[dateYear].subNodes[dateMonth] ? { ...acc.daily.subNodes[dateYear].subNodes[dateMonth] } : { ...defaultObj }
+        if(!(unixTimestamp in acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }}
+        // acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp] = { ...defaultObj } 
+        acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp].metrics.cases = 0
+        acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp].metrics.deaths = 0
+
+        if(!(thisWeeksMetadata.year in acc.weekly.subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
+        if(!(thisWeeksMetadata.week in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
+        if(!(unixTimestamp in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
+        // acc.weekly.subNodes[thisWeeksMetadata.year] = acc.weekly.subNodes[thisWeeksMetadata.year] ? acc.weekly.subNodes[thisWeeksMetadata.year] : { ...defaultObj }
+        // acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] = acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] ? { ...acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] } : { ...defaultObj }
+        // acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp] = { ...defaultObj }
+        acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp].metrics.cases = 0
+        acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp].metrics.deaths = 0
+        // ^ Stored as two separate trees because the year a day is in can be different from the year a week is in. Example: The week with January 3rd in it is sometimes, technically, the 53rd week of the previous year. But January 3rd's "year" is the current year.
+
+        acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].start = thisWeeksMetadata.start
+        acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].end = thisWeeksMetadata.end
+
+        // acc.weekYear = date.getWeek().year // This can differ from the actual year. Like lol ikr!?!? https://en.wikipedia.org/wiki/ISO_8601#Week_dates
+        return acc
+      }, {
+          daily: { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} },
+          weekly: { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } 
+        })
+    }
+
     const newJHUData = jhuData
     .map(thisRow => { return { ...thisRow, location: [ thisRow.continentName ] }})
     .map(thisRow => { return thisRow.countryName ? { ...thisRow, location: [ ...thisRow.location, thisRow.countryName] } : { ...thisRow } })
@@ -183,8 +225,7 @@ exports.create = async (limit = null) => {
               daily: { cases: {}, deaths: {} },
               cases: {}, deaths: {} // replacing the "daily" object, eventually
             },
-            cases: {},
-            deaths: {}
+            aggregates: getTimeTree(Object.keys(convertAllKeysThatAreDatesToUnixTimestamps(removeNonDateKeys(jhuData[0]))))
           }
           superRegions.push(superRegions[i].subregions[curr.location[i]])
         } else {
@@ -193,7 +234,7 @@ exports.create = async (limit = null) => {
         if(i + 1 === curr.location.length) { // If this is the last location (i.e. the most granular location data we have), update the appropriate metric.
           // const terribleProgrammingCurrentMetric = curr.metric
           superRegions[i].subregions[curr.location[i]].totals.daily[curr.metric] = limiter(convertAllKeysThatAreDatesToUnixTimestamps(removeNonDateKeys(curr)), limit)
-          superRegions[i].subregions[curr.location[i]][curr.metric].aggregates = Object.entries(superRegions[i].subregions[curr.location[i]].totals.daily[curr.metric])
+          superRegions[i].subregions[curr.location[i]].aggregates = Object.entries(superRegions[i].subregions[curr.location[i]].totals.daily[curr.metric])
           .reduce((acc, current, currIdx, origArr) => {
             let [unixTimestamp, metricCount] = current
             // console.info(curr.metric, metricCount)
@@ -244,7 +285,8 @@ exports.create = async (limit = null) => {
       rolledUp: false,
       subregions: {},
       superRegionName: null,
-      totals: { daily: { cases: {}, deaths: {} } }
+      totals: { daily: { cases: {}, deaths: {} } },
+      aggregates: getTimeTree(Object.keys(convertAllKeysThatAreDatesToUnixTimestamps(removeNonDateKeys(jhuData[0]))))
     }})
 
     const findLocation = (str, obj) => {
@@ -372,30 +414,68 @@ exports.create = async (limit = null) => {
       }
     }
 
-    const rollupDailyMetrics = async metricNode => { // cases/deaths: {daily: children:[{[year]: children: [{[month]: children: [{[unixTimestamp]: #}] }] }, weekly: {[year]: {[week]: {[unixTimestamp]: #}}}
-      if(metricNode.rolledUp) return metricNode // termination condition
+    const rollupMetrics = async timeNode => { // aggregates: {daily: subNodes:[{[year]: subNodes: [{[month]: subNodes: [{[unixTimestamp]: #}] }] }, weekly: {[year]: {[week]: {[unixTimestamp]: #}}}
+      if(timeNode.rolledUp) 
+        return timeNode // termination condition
 
-      while(!metricNode.rolledUp) { // sum child nodes
-        for (let [key, value] of Object.entries(metricNode)) {
-          if(key === 'rolledUp') continue
-          await rollupDailyMetrics(value) // Basically, roll up all the subregions, then continue. Don't process other things until the subregions are finished processing. The subregions won't finish until their subregions are 
+//       console.debug(`
+// ${Object.keys(timeNode.subNodes)}
+// ${!timeNode.rolledUp} & ${Object.entries(timeNode.subregions).every(([key, value]) => value.rolledUp)} (is not rolled up & subregions are rolled up)`)
+// ^Leaving in for debugging purposes
+      // console.info(timeNode)
+      // console.info(Object.keys(timeNode.subNodes).length === 0)
+      if(Object.keys(timeNode.subNodes).length === 0) {
+        timeNode.rolledUp = true
+        return timeNode
+      } else {
+        while(true) { // sum child nodes
+          for (let [key, value] of Object.entries(timeNode.subNodes)) {
+            // console.info(key, value)
+            if(key === 'rolledUp' || key === 'metrics') continue
+            if(!value.rolledUp) {
+              await rollupMetrics(value)
+            }
+             // Basically, roll up all the subregions, then continue. Don't process other things until the subregions are finished processing. The subregions won't finish until their subregions are 
+          }
+          // console.info(Object.entries(timeNode.subNodes).every(([key, value]) => {
+          //   console.info(value)
+          // }))
+          if(Object.entries(timeNode.subNodes).every(([key, value]) => value.rolledUp)) {
+            // console.info('breaking loop')
+            break
+          }
         }
-        if(Object.entries(location.subregions).every(([key, value]) => value.rolledUp)) {
-          metricNode.rolledUp = true
-          break
+  
+        // sum current node
+        let subNodeKeys = Object.keys(timeNode.subNodes)
+        let i = 0
+        while(i < subNodeKeys.length) {
+          console.info(timeNode.metrics.cases, timeNode.subNodes[subNodeKeys[i]].metrics.cases)
+          timeNode.metrics.cases = sum(timeNode.metrics.cases, timeNode.subNodes[subNodeKeys[i]].metrics.cases) 
+          timeNode.metrics.deaths = sum(timeNode.metrics.deaths, timeNode.subNodes[subNodeKeys[i]].metrics.deaths) 
+          // let caseNodesLeft = Object.keys(timeNode.subNodes[subNodeKeys[i]].metrics.cases)
+          // let deathNodesLeft = Object.keys(timeNode.subNodes[subNodeKeys[i]].metrics.deaths)
+          // while(caseNodesLeft.length > 0 || deathNodesLeft.length > 0) { // Get case and death totals
+          //   // let thisCasesKey = caseNodesLeft.pop()
+          //   // let thisDeathKey = deathNodesLeft.pop()
+          //   if(thisCasesKey) {
+          //     // timeNode.metrics.cases[thisCasesKey] = sum(timeNode.metrics.cases[thisCasesKey], timeNode.subNodes[subNodeKeys[i]].metrics.cases[thisCasesKey]) 
+          //     timeNode.metrics.cases = sum(timeNode.metrics.cases, timeNode.subNodes[subNodeKeys[i]].metrics.cases) 
+          //   }
+          //   if(thisDeathKey) {
+          //     timeNode.metrics.deaths = sum(timeNode.metrics.deaths, timeNode.subNodes[subNodeKeys[i]].metrics.deaths) 
+          //   }
+          // }
+          i++
         }
+  
+  
+        // calculate derived metrics 
+  
+  
+        timeNode.rolledUp = true
+        return timeNode
       }
-
-      // sum current node
-
-
-      // calculate derived metrics 
-
-      return metricNode
-    }
-
-    const rollupWeeklyMetrics = async metricNode => {
-      
     }
 
     const calcAggs2 = async location => {
@@ -408,15 +488,19 @@ exports.create = async (limit = null) => {
       if(Object.keys(location.subregions).length === 0) {
         let derivedMetrics = calculatedDerivedMetrics(sortObj(location.totals.daily.cases), sortObj(location.totals.daily.deaths), location.name)
         location.totals.daily = { ...location.totals.daily, ...derivedMetrics }
+        location.aggregates.daily = await rollupMetrics(location.aggregates.daily)
+        location.aggregates.weekly = await rollupMetrics(location.aggregates.weekly)
         location.rolledUp = true
         return location
       } else {
 
         while(true) { // Hold up until all the subregions have calculated their aggregates. 
           for (let [key, value] of Object.entries(location.subregions)) {
-            await calcAggs(value) // Basically, roll up all the subregions, then continue. Don't process other things until the subregions are finished processing. The subregions won't finish until their subregions are 
+            await calcAggs2(value) // Basically, roll up all the subregions, then continue. Don't process other things until the subregions are finished processing. The subregions won't finish until their subregions are 
+            value.aggregates.daily = await rollupMetrics(value.aggregates.daily)
+            value.aggregates.weekly = await rollupMetrics(value.aggregates.weekly)
           }
-          if(Object.entries(location.subregions).every(([key, value]) => value.rolledUp)) {
+          if(Object.entries(location.subregions).every(([key, value]) => value.rolledUp && value.aggregates.daily.rolledUp && value.aggregates.weekly.rolledUp)) {
             break
           }
         }
@@ -440,6 +524,7 @@ exports.create = async (limit = null) => {
         }
         let derivedMetrics = calculatedDerivedMetrics(sortObj(location.totals.daily.cases), sortObj(location.totals.daily.deaths), location.name)
         location.totals.daily = { ...location.totals.daily, ...derivedMetrics }
+
         location.rolledUp = true
         return location
       }
