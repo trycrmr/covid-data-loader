@@ -114,9 +114,10 @@ exports.create = async (limit = null) => {
       }
     }
 
-    const sum = (num1, num2) => { // utility function
-      num1 = +(num1) || 0 // Casts the value passed to a Number. If it's a falsey value just assign it zero. 
-      num2 = +(num2) || 0
+    const sum = async (num1, num2) => { // utility function
+      // if(isNaN(num1) || isNaN(num2)) console.info(num1, num2)
+      num1 = !isNaN(num1) ? +(num1) || 0 : 0 // Casts the value passed to a Number. If it's a falsey value just assign it zero. 
+      num2 = !isNaN(num2) ? +(num2) || 0 : 0
       return num1 + num2 
     }
     // End utility functions
@@ -160,22 +161,22 @@ exports.create = async (limit = null) => {
         let dateMonth = date.getMonth() + 1
         let thisWeeksMetadata = date.getWeek(new Date(+(date))) // Get week is not a part of native JavaScript. See utility functions.
         // console.info(date,dateYear,dateMonth,thisWeeksMetadata.week,thisWeeksMetadata.start,thisWeeksMetadata.end)
-        let defaultObj = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }
+        // let defaultObj = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }
         // acc.daily = acc.daily ? acc.daily : { ...defaultObj }
         // acc.weekly = acc.weekly ? acc.weekly : { ...defaultObj }
         // console.info(dateMonth, thisWeeksMetadata, acc, dateYear, date)
         // acc.daily.subNodes[dateYear] = acc.daily.subNodes[dateYear] ? acc.daily.subNodes[dateYear] : { ...defaultObj }
-        if(!(dateYear in acc.daily.subNodes)) {acc.daily.subNodes[dateYear] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
-        if(!(dateMonth in acc.daily.subNodes[dateYear].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }}
+        if(!(dateYear in acc.daily.subNodes)) {acc.daily.subNodes[dateYear] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } }
+        if(!(dateMonth in acc.daily.subNodes[dateYear].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} }}
         // acc.daily.subNodes[dateYear].subNodes[dateMonth] = acc.daily.subNodes[dateYear].subNodes[dateMonth] ? { ...acc.daily.subNodes[dateYear].subNodes[dateMonth] } : { ...defaultObj }
-        if(!(unixTimestamp in acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }}
+        if(!(unixTimestamp in acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} }}
         // acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp] = { ...defaultObj } 
         acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp].metrics.cases = 0
         acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp].metrics.deaths = 0
 
-        if(!(thisWeeksMetadata.year in acc.weekly.subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
-        if(!(thisWeeksMetadata.week in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
-        if(!(unixTimestamp in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
+        if(!(thisWeeksMetadata.year in acc.weekly.subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } }
+        if(!(thisWeeksMetadata.week in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } }
+        if(!(unixTimestamp in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } }
         // acc.weekly.subNodes[thisWeeksMetadata.year] = acc.weekly.subNodes[thisWeeksMetadata.year] ? acc.weekly.subNodes[thisWeeksMetadata.year] : { ...defaultObj }
         // acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] = acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] ? { ...acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] } : { ...defaultObj }
         // acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp] = { ...defaultObj }
@@ -189,9 +190,20 @@ exports.create = async (limit = null) => {
         // acc.weekYear = date.getWeek().year // This can differ from the actual year. Like lol ikr!?!? https://en.wikipedia.org/wiki/ISO_8601#Week_dates
         return acc
       }, {
-          daily: { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} },
-          weekly: { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } 
+          daily: { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} },
+          weekly: { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } 
         })
+    }
+
+    const updateTimeTree = async (timeTree, unixTimestamp, metric, value) => {
+      let date = new Date(+(unixTimestamp))
+      let dateYear = date.getFullYear()
+      let dateMonth = date.getMonth() + 1
+      let thisWeeksMetadata = date.getWeek(new Date(+(date))) // Get week is not a part of native JavaScript. See utility functions.
+
+      timeTree.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp].metrics[metric] = value
+      timeTree.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp].metrics[metric] = value
+      return timeTree
     }
 
     const newJHUData = jhuData
@@ -234,45 +246,61 @@ exports.create = async (limit = null) => {
         if(i + 1 === curr.location.length) { // If this is the last location (i.e. the most granular location data we have), update the appropriate metric.
           // const terribleProgrammingCurrentMetric = curr.metric
           superRegions[i].subregions[curr.location[i]].totals.daily[curr.metric] = limiter(convertAllKeysThatAreDatesToUnixTimestamps(removeNonDateKeys(curr)), limit)
-          superRegions[i].subregions[curr.location[i]].aggregates = Object.entries(superRegions[i].subregions[curr.location[i]].totals.daily[curr.metric])
-          .reduce((acc, current, currIdx, origArr) => {
-            let [unixTimestamp, metricCount] = current
-            // console.info(curr.metric, metricCount)
-            let date = new Date(+(unixTimestamp))
-            let dateYear = date.getFullYear()
-            let dateMonth = date.getMonth() + 1
-            let thisWeeksMetadata = date.getWeek(new Date(+(date))) // Get week is not a part of native JavaScript. See utility functions.
-            // console.info(date,dateYear,dateMonth,thisWeeksMetadata.week,thisWeeksMetadata.start,thisWeeksMetadata.end)
-            let defaultObj = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }
-            // acc.daily = acc.daily ? acc.daily : { ...defaultObj }
-            // acc.weekly = acc.weekly ? acc.weekly : { ...defaultObj }
-            // console.info(dateMonth, thisWeeksMetadata, acc, dateYear, date)
-            // acc.daily.subNodes[dateYear] = acc.daily.subNodes[dateYear] ? acc.daily.subNodes[dateYear] : { ...defaultObj }
-            if(!(dateYear in acc.daily.subNodes)) {acc.daily.subNodes[dateYear] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
-            if(!(dateMonth in acc.daily.subNodes[dateYear].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }}
-            // acc.daily.subNodes[dateYear].subNodes[dateMonth] = acc.daily.subNodes[dateYear].subNodes[dateMonth] ? { ...acc.daily.subNodes[dateYear].subNodes[dateMonth] } : { ...defaultObj }
-            if(!(unixTimestamp in acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }}
-            // acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp] = { ...defaultObj } 
-            acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp].metrics[curr.metric] = metricCount
-
-            if(!(thisWeeksMetadata.year in acc.weekly.subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
-            if(!(thisWeeksMetadata.week in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
-            if(!(unixTimestamp in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } }
-            // acc.weekly.subNodes[thisWeeksMetadata.year] = acc.weekly.subNodes[thisWeeksMetadata.year] ? acc.weekly.subNodes[thisWeeksMetadata.year] : { ...defaultObj }
-            // acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] = acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] ? { ...acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] } : { ...defaultObj }
-            // acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp] = { ...defaultObj }
-            acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp].metrics[curr.metric] = metricCount
-            // ^ Stored as two separate trees because the year a day is in can be different from the year a week is in. Example: The week with January 3rd in it is sometimes, technically, the 53rd week of the previous year. But January 3rd's "year" is the current year.
-
-            acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].start = thisWeeksMetadata.start
-            acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].end = thisWeeksMetadata.end
-
-            // acc.weekYear = date.getWeek().year // This can differ from the actual year. Like lol ikr!?!? https://en.wikipedia.org/wiki/ISO_8601#Week_dates
-            return acc
-          }, {
-              daily: { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} },
-              weekly: { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} } 
+          if(!("daily" in superRegions[i].subregions[curr.location[i]].aggregates)) {
+            superRegions[i].subregions[curr.location[i]].aggregates = getTimeTree(Object.keys(convertAllKeysThatAreDatesToUnixTimestamps(removeNonDateKeys(jhuData[0]))))
+          } else {
+            Object.entries(superRegions[i].subregions[curr.location[i]].totals.daily[curr.metric])
+            .forEach(dayWithMetrics => {
+              // console.info(dayWithMetrics)
+              updateTimeTree(superRegions[i].subregions[curr.location[i]].aggregates, dayWithMetrics[0], curr.metric, dayWithMetrics[1] )
             })
+          }
+          
+          
+          // = { ...superRegions[i].subregions[curr.location[i]].aggregates, ...Object.entries(superRegions[i].subregions[curr.location[i]].totals.daily[curr.metric])
+          // .reduce((acc, current, currIdx, origArr) => {
+          //   let [unixTimestamp, metricCount] = current
+          //   // console.info(curr.metric, metricCount)
+          //   let date = new Date(+(unixTimestamp))
+          //   let dateYear = date.getFullYear()
+          //   let dateMonth = date.getMonth() + 1
+          //   let thisWeeksMetadata = date.getWeek(new Date(+(date))) // Get week is not a part of native JavaScript. See utility functions.
+          //   // console.info(date,dateYear,dateMonth,thisWeeksMetadata.week,thisWeeksMetadata.start,thisWeeksMetadata.end)
+          //   // let defaultObj = { rolledUp: false, metrics: { cases: undefined, deaths: undefined }, subNodes: {} }
+          //   // acc.daily = acc.daily ? acc.daily : { ...defaultObj }
+          //   // acc.weekly = acc.weekly ? acc.weekly : { ...defaultObj }
+          //   // console.info(dateMonth, thisWeeksMetadata, acc, dateYear, date)
+          //   // acc.daily.subNodes[dateYear] = acc.daily.subNodes[dateYear] ? acc.daily.subNodes[dateYear] : { ...defaultObj }
+          //   if(!(dateYear in acc.daily.subNodes)) {acc.daily.subNodes[dateYear] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } }
+          //   if(!(dateMonth in acc.daily.subNodes[dateYear].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} }}
+          //   // acc.daily.subNodes[dateYear].subNodes[dateMonth] = acc.daily.subNodes[dateYear].subNodes[dateMonth] ? { ...acc.daily.subNodes[dateYear].subNodes[dateMonth] } : { ...defaultObj }
+          //   if(!(unixTimestamp in acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes)) {acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} }}
+          //   // acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp] = { ...defaultObj } 
+          //   acc.daily.subNodes[dateYear].subNodes[dateMonth].subNodes[unixTimestamp].metrics[curr.metric] = metricCount
+
+          //   if(!(thisWeeksMetadata.year in acc.weekly.subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } }
+          //   if(!(thisWeeksMetadata.week in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } }
+          //   if(!(unixTimestamp in acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes)) { acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp] = { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } }
+          //   // acc.weekly.subNodes[thisWeeksMetadata.year] = acc.weekly.subNodes[thisWeeksMetadata.year] ? acc.weekly.subNodes[thisWeeksMetadata.year] : { ...defaultObj }
+          //   // acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] = acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] ? { ...acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week] } : { ...defaultObj }
+          //   // acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp] = { ...defaultObj }
+          //   acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp].metrics[curr.metric] = metricCount
+          //   // if(superRegions[i].subregions[curr.location[i]].name === 'Albania') console.info(acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp].metrics.cases, acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].subNodes[unixTimestamp].metrics.deaths)
+          //   // ^ Stored as two separate trees because the year a day is in can be different from the year a week is in. Example: The week with January 3rd in it is sometimes, technically, the 53rd week of the previous year. But January 3rd's "year" is the current year.
+
+          //   acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].start = thisWeeksMetadata.start
+          //   acc.weekly.subNodes[thisWeeksMetadata.year].subNodes[thisWeeksMetadata.week].end = thisWeeksMetadata.end
+
+          //   // console.info(`Daily (${curr.metric}): ${metricCount}`,`Weekly (${curr.metric}): ${metricCount}` )
+
+          //   // acc.weekYear = date.getWeek().year // This can differ from the actual year. Like lol ikr!?!? https://en.wikipedia.org/wiki/ISO_8601#Week_dates
+          //   return acc
+          // }, {
+          //     daily: { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} },
+          //     weekly: { rolledUp: false, metrics: { cases: 0, deaths: 0 }, subNodes: {} } 
+          //   }) }
+
+
           // console.info(superRegions[i].subregions[curr.location[i]].name, JSON.stringify(superRegions[i].subregions[curr.location[i]]))
           // console.info(' ')
         }
@@ -425,6 +453,7 @@ exports.create = async (limit = null) => {
       // console.info(timeNode)
       // console.info(Object.keys(timeNode.subNodes).length === 0)
       if(Object.keys(timeNode.subNodes).length === 0) {
+        // if(timeNode.metrics.cases > 0) console.info(timeNode.metrics.cases)
         timeNode.rolledUp = true
         return timeNode
       } else {
@@ -447,27 +476,17 @@ exports.create = async (limit = null) => {
         }
   
         // sum current node
-        let subNodeKeys = Object.keys(timeNode.subNodes)
-        let i = 0
-        while(i < subNodeKeys.length) {
-          console.info(timeNode.metrics.cases, timeNode.subNodes[subNodeKeys[i]].metrics.cases)
-          timeNode.metrics.cases = sum(timeNode.metrics.cases, timeNode.subNodes[subNodeKeys[i]].metrics.cases) 
-          timeNode.metrics.deaths = sum(timeNode.metrics.deaths, timeNode.subNodes[subNodeKeys[i]].metrics.deaths) 
-          // let caseNodesLeft = Object.keys(timeNode.subNodes[subNodeKeys[i]].metrics.cases)
-          // let deathNodesLeft = Object.keys(timeNode.subNodes[subNodeKeys[i]].metrics.deaths)
-          // while(caseNodesLeft.length > 0 || deathNodesLeft.length > 0) { // Get case and death totals
-          //   // let thisCasesKey = caseNodesLeft.pop()
-          //   // let thisDeathKey = deathNodesLeft.pop()
-          //   if(thisCasesKey) {
-          //     // timeNode.metrics.cases[thisCasesKey] = sum(timeNode.metrics.cases[thisCasesKey], timeNode.subNodes[subNodeKeys[i]].metrics.cases[thisCasesKey]) 
-          //     timeNode.metrics.cases = sum(timeNode.metrics.cases, timeNode.subNodes[subNodeKeys[i]].metrics.cases) 
-          //   }
-          //   if(thisDeathKey) {
-          //     timeNode.metrics.deaths = sum(timeNode.metrics.deaths, timeNode.subNodes[subNodeKeys[i]].metrics.deaths) 
-          //   }
-          // }
-          i++
-        }
+        // let subNodeKeys = Object.keys(timeNode.subNodes)
+        let greatestSubNodeKey = Object.keys(timeNode.subNodes).sort((key1, key2) => key2 - key1)[0]
+        // let i = 0
+        // while(i < subNodeKeys.length) {
+        timeNode.metrics.cases = timeNode.subNodes[greatestSubNodeKey].metrics.cases
+        timeNode.metrics.deaths = timeNode.subNodes[greatestSubNodeKey].metrics.deaths
+        // console.info(timeNode.metrics.cases, timeNode.metrics.deaths)
+          // timeNode.metrics.cases = sum(timeNode.metrics.cases, timeNode.subNodes[subNodeKeys[i]].metrics.cases) 
+          // timeNode.metrics.deaths = sum(timeNode.metrics.deaths, timeNode.subNodes[subNodeKeys[i]].metrics.deaths) 
+          // i++ 
+        // }
   
   
         // calculate derived metrics 
@@ -488,8 +507,7 @@ exports.create = async (limit = null) => {
       if(Object.keys(location.subregions).length === 0) {
         let derivedMetrics = calculatedDerivedMetrics(sortObj(location.totals.daily.cases), sortObj(location.totals.daily.deaths), location.name)
         location.totals.daily = { ...location.totals.daily, ...derivedMetrics }
-        location.aggregates.daily = await rollupMetrics(location.aggregates.daily)
-        location.aggregates.weekly = await rollupMetrics(location.aggregates.weekly)
+        
         location.rolledUp = true
         return location
       } else {
@@ -514,18 +532,28 @@ exports.create = async (limit = null) => {
             let thisCasesKey = caseDatesLeft.pop()
             let thisDeathKey = deathDatesLeft.pop()
             if(thisCasesKey) {
-              location.totals.daily.cases[thisCasesKey] = sum(location.totals.daily.cases[thisCasesKey], location.subregions[subregionKeys[i]].totals.daily.cases[thisCasesKey]) 
+              // if(isNaN(location.totals.daily.cases[thisCasesKey])) { 
+              //   console.info(location.totals.daily.cases[thisCasesKey], thisCasesKey)
+              // } else {
+              //   console.info('good ', location.totals.daily.cases[thisCasesKey], thisCasesKey)
+              // }
+              location.totals.daily.cases[thisCasesKey] = await sum(location.totals.daily.cases[thisCasesKey], location.subregions[subregionKeys[i]].totals.daily.cases[thisCasesKey]) 
+              location.aggregates = await updateTimeTree(location.aggregates, thisCasesKey, 'cases', location.totals.daily.cases[thisCasesKey] )
             }
             if(thisDeathKey) {
-              location.totals.daily.deaths[thisDeathKey] = sum(location.totals.daily.deaths[thisDeathKey], location.subregions[subregionKeys[i]].totals.daily.deaths[thisDeathKey]) 
+              location.totals.daily.deaths[thisDeathKey] = await sum(location.totals.daily.deaths[thisDeathKey], location.subregions[subregionKeys[i]].totals.daily.deaths[thisDeathKey]) 
+              location.aggregates = await updateTimeTree(location.aggregates, thisDeathKey, 'deaths', location.totals.daily.deaths[thisDeathKey] )
             }
           }
           i++
         }
         let derivedMetrics = calculatedDerivedMetrics(sortObj(location.totals.daily.cases), sortObj(location.totals.daily.deaths), location.name)
         location.totals.daily = { ...location.totals.daily, ...derivedMetrics }
-
         location.rolledUp = true
+
+        location.aggregates.daily = await rollupMetrics(location.aggregates.daily)
+        location.aggregates.weekly = await rollupMetrics(location.aggregates.weekly)
+
         return location
       }
     }
@@ -545,7 +573,8 @@ exports.create = async (limit = null) => {
     */
 
     // return jhuDataAggregated
-    console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Europe"].subregions["Albania"], null, 2))
+    console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Europe"].subregions["Albania"]))
+    // console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["North America"].subregions["United States"].subregions["Rhode Island"]))
     // console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Europe"]))
   } catch(err) {
     console.error(err)
