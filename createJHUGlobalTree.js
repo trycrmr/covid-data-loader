@@ -1,6 +1,6 @@
 const globals = require('./globals');
-// const jhucsseScraper = require("./jhucsse")
-const jhucsseScraper = require("./jhucsseTest")
+const jhucsseScraper = require("./jhucsse")
+// const jhucsseScraper = require("./jhucsseTest")
 
 
 exports.create = async (limit = null) => {
@@ -122,8 +122,8 @@ exports.create = async (limit = null) => {
     }
     // End utility functions
 
-    // let jhuData = await jhucsseScraper.fetchData()
-    let jhuData = jhucsseScraper.fetchData
+    let jhuData = await jhucsseScraper.fetchData()
+    // let jhuData = jhucsseScraper.fetchData
 
     jhuData = jhuData.map(thisJhu => thisJhu.data.map(thisRow => {
       thisRow.metric = thisJhu.name === 'confirmed_US' || thisJhu.name === 'confirmed_global' ? 'cases' : 'deaths'
@@ -572,8 +572,8 @@ exports.create = async (limit = null) => {
 }
     */
 
-    // return jhuDataAggregated
-    console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Europe"].subregions["Albania"]))
+    return jhuDataAggregated
+    // console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Europe"].subregions["Albania"]))
     // console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["North America"].subregions["United States"].subregions["Rhode Island"]))
     // console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Europe"]))
   } catch(err) {
