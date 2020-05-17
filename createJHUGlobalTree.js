@@ -1,5 +1,6 @@
 const globals = require('./globals');
-const jhucsseScraper = require("./jhucsse")
+const jhucsseScraper = require("./jhucsseTest")
+// const jhucsseScraper = require("./jhucsse")
 
 
 exports.create = async (limit = null) => {
@@ -52,7 +53,8 @@ exports.create = async (limit = null) => {
     }
     // End utility functions
 
-    let jhuData = await jhucsseScraper.fetchData()
+    // let jhuData = await jhucsseScraper.fetchData()
+    let jhuData = await jhucsseScraper.fetchData
 
     jhuData = jhuData.map(thisJhu => thisJhu.data.map(thisRow => {
       thisRow.metric = thisJhu.name === 'confirmed_US' || thisJhu.name === 'confirmed_global' ? 'cases' : 'deaths'
@@ -256,6 +258,31 @@ exports.create = async (limit = null) => {
 
     let jhuDataAggregated = await calcAggs(newJHUData.Earth)
     jhuDataAggregated = [ { data: jhuDataAggregated }, { meta: { lastUpdated: (new Date).toISOString(), limit }} ]
+
+    const addPerCapitaMetric = (locationNode, srcMetric) => {
+      locationNode.totals.daily[`${srcMetric}Per100000`] = Object.entries(locationNode.totals.daily[srcMetric])
+      .reduce((acc, curr, currIdx, origArr) => {
+        let [unixTimestamp, value] = curr
+        acc[unixTimestamp] = Number(100000 * (+(value) / +(locationNode.population))).toFixed(2)
+        return acc
+      }, {})
+    }
+
+    globals.countryPopulations.forEach(thisPop => {
+      // console.info(thisPop.fields.value)
+      let locationNode = findLocation(thisPop.fields.country_name, jhuDataAggregated[0].data)
+      if(!locationNode) {
+        // console.info(`No pop for ${thisPop.fields.country_name}`)
+        return undefined
+      } else {
+        locationNode.population = thisPop.fields.value
+        addPerCapitaMetric(locationNode, 'cases')
+        addPerCapitaMetric(locationNode, 'deaths')
+        addPerCapitaMetric(locationNode, 'caseChange')
+        addPerCapitaMetric(locationNode, 'deathsChange')
+      }
+    })
+
     /* calcAggs schema
 {
   name: 'Earth',
@@ -267,7 +294,9 @@ exports.create = async (limit = null) => {
 }
     */
 
-    return jhuDataAggregated
+    // return jhuDataAggregated
+    console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Europe"].subregions["Albania"]))
+    // console.info(JSON.stringify(globals.countryPopulations[0].fields))
   } catch(err) {
     console.error(err)
     return err
