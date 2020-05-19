@@ -1,0 +1,241 @@
+module.exports = `"UNCountryNames","RawUNCountryPopulationEstimatesJul12019","UNCountryPopulationEstimatesJul12019"
+"Burundi",11530.577,11530577
+"Comoros",850.891,850891
+"Djibouti",973.557,973557
+"Eritrea",3497.117,3497117
+"Ethiopia",112078.727,112078727
+"Kenya",52573.967,52573967
+"Madagascar",26969.306,26969306
+"Malawi",18628.749,18628749
+"Mauritius",1269.67,126967
+"Mayotte",266.153,266153
+"Mozambique",30366.043,30366043
+"Réunion",888.932,888932
+"Rwanda",12626.938,12626938
+"Seychelles",97.741,97741
+"Somalia",15442.906,15442906
+"South Sudan",11062.114,11062114
+"Uganda",44269.587,44269587
+"United Republic of Tanzania",58005.461,58005461
+"Zambia",17861.034,17861034
+"Zimbabwe",14645.473,14645473
+"Angola",31825.299,31825299
+"Cameroon",25876.387,25876387
+"Central African Republic",4745.179,4745179
+"Chad",15946.882,15946882
+"Congo",5380.504,5380504
+"Democratic Republic of the Congo",86790.568,86790568
+"Equatorial Guinea",1355.982,1355982
+"Gabon",2172.578,2172578
+"Sao Tome and Principe",215.048,215048
+"Botswana",2303.703,2303703
+"Eswatini",1148.133,1148133
+"Lesotho",2125.267,2125267
+"Namibia",2494.524,2494524
+"South Africa",58558.267,58558267
+"Benin",11801.151,11801151
+"Burkina Faso",20321.383,20321383
+"Cabo Verde",549.936,549936
+"Côte d'Ivoire",25716.554,25716554
+"Gambia",2347.696,2347696
+"Ghana",30417.858,30417858
+"Guinea",12771.246,12771246
+"Guinea-Bissau",1920.917,1920917
+"Liberia",4937.374,4937374
+"Mali",19658.023,19658023
+"Mauritania",4525.698,4525698
+"Niger",23310.719,23310719
+"Nigeria",200963.603,200963603
+"Saint Helena",6.061,6061
+"Senegal",16296.362,16296362
+"Sierra Leone",7813.207,7813207
+"Togo",8082.359,8082359
+"Algeria",43053.054,43053054
+"Egypt",100388.076,100388076
+"Libya",6777.453,6777453
+"Morocco",36471.766,36471766
+"Sudan",42813.237,42813237
+"Tunisia",11694.721,11694721
+"Western Sahara",582.458,582458
+"Western Asia",275324.793,275324793
+"Armenia",2957.728,2957728
+"Azerbaijan",10047.719,10047719
+"Bahrain",1641.164,1641164
+"Cyprus",1198.574,1198574
+"Georgia",3996.762,3996762
+"Iraq",39309.789,39309789
+"Israel",8519.373,8519373
+"Jordan",10101.697,10101697
+"Kuwait",4207.077,4207077
+"Lebanon",6855.709,6855709
+"Oman",4974.992,4974992
+"Qatar",2832.071,2832071
+"Saudi Arabia",34268.529,34268529
+"State of Palestine",4981.422,4981422
+"Syrian Arab Republic",17070.132,17070132
+"Turkey",83429.607,83429607
+"United Arab Emirates",9770.526,9770526
+"Yemen",29161.922,29161922
+"Kazakhstan",18551.428,18551428
+"Kyrgyzstan",6415.851,6415851
+"Tajikistan",9321.023,9321023
+"Turkmenistan",5942.094,5942094
+"Uzbekistan",32981.715,32981715
+"Afghanistan",38041.757,38041757
+"Bangladesh",163046.173,163046173
+"Bhutan",763.094,763094
+"India",1366417.756,1366417756
+"Iran (Islamic Republic of)",82913.893,82913893
+"Maldives",530.957,530957
+"Nepal",28608.715,28608715
+"Pakistan",216565.317,216565317
+"Sri Lanka",21323.734,21323734
+"China",1433783.692,1433783692
+"China, Hong Kong SAR",7436.157,7436157
+"China, Macao SAR",640.446,640446
+"China, Taiwan Province of China",23773.881,23773881
+"Dem. People's Republic of Korea",25666.158,25666158
+"Japan",126860.299,126860299
+"Mongolia",3225.166,3225166
+"Republic of Korea",51225.321,51225321
+"Brunei Darussalam",433.296,433296
+"Cambodia",16486.542,16486542
+"Indonesia",270625.567,270625567
+"Lao People's Democratic Republic",7169.456,7169456
+"Malaysia",31949.789,31949789
+"Myanmar",54045.422,54045422
+"Philippines",108116.622,108116622
+"Singapore",5804.343,5804343
+"Thailand",69625.581,69625581
+"Timor-Leste",1293.12,129312
+"Viet Nam",96462.108,96462108
+"Anguilla",14.872,14872
+"Antigua and Barbuda",97.115,97115
+"Aruba",106.31,10631
+"Bahamas",389.486,389486
+"Barbados",287.021,287021
+"Bonaire, Sint Eustatius and Saba",25.983,25983
+"British Virgin Islands",30.033,30033
+"Cayman Islands",64.948,64948
+"Cuba",11333.484,11333484
+"Curaçao",163.423,163423
+"Dominica",71.808,71808
+"Dominican Republic",10738.957,10738957
+"Grenada",112.002,112002
+"Guadeloupe",400.048,400048
+"Haiti",11263.079,11263079
+"Jamaica",2948.277,2948277
+"Martinique",375.557,375557
+"Montserrat",4.991,4991
+"Puerto Rico",2933.404,2933404
+"Saint Barthélemy",9.853,9853
+"Saint Kitts and Nevis",52.834,52834
+"Saint Lucia",182.795,182795
+"Saint Martin (French part)",38.002,38002
+"Saint Vincent and the Grenadines",110.593,110593
+"Sint Maarten (Dutch part)",42.389,42389
+"Trinidad and Tobago",1394.969,1394969
+"Turks and Caicos Islands",38.194,38194
+"United States Virgin Islands",104.579,104579
+"Belize",390.351,390351
+"Costa Rica",5047.561,5047561
+"El Salvador",6453.55,645355
+"Guatemala",17581.476,17581476
+"Honduras",9746.115,9746115
+"Mexico",127575.529,127575529
+"Nicaragua",6545.503,6545503
+"Panama",4246.44,424644
+"Argentina",44780.675,44780675
+"Bolivia (Plurinational State of)",11513.102,11513102
+"Brazil",211049.519,211049519
+"Chile",18952.035,18952035
+"Colombia",50339.443,50339443
+"Ecuador",17373.657,17373657
+"Falkland Islands (Malvinas)",3.372,3372
+"French Guiana",290.823,290823
+"Guyana",782.775,782775
+"Paraguay",7044.639,7044639
+"Peru",32510.462,32510462
+"Suriname",581.363,581363
+"Uruguay",3461.731,3461731
+"Venezuela (Bolivarian Republic of)",28515.829,28515829
+"Australia",25203.2,252032
+"New Zealand",4783.062,4783062
+"Melanesia",10918.534,10918534
+"Fiji",889.955,889955
+"New Caledonia",282.757,282757
+"Papua New Guinea",8776.119,8776119
+"Solomon Islands",669.821,669821
+"Vanuatu",299.882,299882
+"Micronesia",543.483,543483
+"Guam",167.295,167295
+"Kiribati",117.608,117608
+"Marshall Islands",58.791,58791
+"Micronesia (Fed. States of)",113.811,113811
+"Nauru",10.764,10764
+"Northern Mariana Islands",57.213,57213
+"Palau",18.001,18001
+"Polynesia",679.769,679769
+"American Samoa",55.312,55312
+"Cook Islands",17.547,17547
+"French Polynesia",279.285,279285
+"Niue",1.614,1614
+"Samoa",197.093,197093
+"Tokelau",1.33,133
+"Tonga",104.497,104497
+"Tuvalu",11.655,11655
+"Wallis and Futuna Islands",11.436,11436
+"Belarus",9452.409,9452409
+"Bulgaria",7000.117,7000117
+"Czechia",10689.213,10689213
+"Hungary",9684.68,968468
+"Poland",37887.771,37887771
+"Republic of Moldova",4043.258,4043258
+"Romania",19364.558,19364558
+"Russian Federation",145872.26,14587226
+"Slovakia",5457.012,5457012
+"Ukraine",43993.643,43993643
+"Channel Islands",172.264,172264
+"Denmark",5771.877,5771877
+"Estonia",1325.649,1325649
+"Faroe Islands",48.677,48677
+"Finland",5532.159,5532159
+"Iceland",339.037,339037
+"Ireland",4882.498,4882498
+"Isle of Man",84.589,84589
+"Latvia",1906.74,190674
+"Lithuania",2759.631,2759631
+"Norway",5378.859,5378859
+"Sweden",10036.391,10036391
+"United Kingdom",67530.161,67530161
+"Albania",2880.913,2880913
+"Andorra",77.146,77146
+"Bosnia and Herzegovina",3300.998,3300998
+"Croatia",4130.299,4130299
+"Gibraltar",33.706,33706
+"Greece",10473.452,10473452
+"Holy See",0.815,815
+"Italy",60550.092,60550092
+"Malta",440.377,440377
+"Montenegro",627.988,627988
+"North Macedonia",2083.458,2083458
+"Portugal",10226.178,10226178
+"San Marino",33.864,33864
+"Serbia",8772.228,8772228
+"Slovenia",2078.654,2078654
+"Spain",46736.782,46736782
+"Austria",8955.108,8955108
+"Belgium",11539.326,11539326
+"France",65129.731,65129731
+"Germany",83517.046,83517046
+"Liechtenstein",38.02,3802
+"Luxembourg",615.73,61573
+"Monaco",38.967,38967
+"Netherlands",17097.123,17097123
+"Switzerland",8591.361,8591361
+"Bermuda",62.508,62508
+"Canada",37411.038,37411038
+"Greenland",56.66,5666
+"Saint Pierre and Miquelon",5.821,5821
+"United States of America",329064.917,329064917
+`
