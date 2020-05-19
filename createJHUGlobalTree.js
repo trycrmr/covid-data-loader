@@ -1,7 +1,7 @@
 const globals = require('./globals');
-const jhucsseScraper = require("./jhucsseTest")
+// const jhucsseScraper = require("./jhucsseTest")
 const allPops = require("./mergePopulationSources")
-// const jhucsseScraper = require("./jhucsse")
+const jhucsseScraper = require("./jhucsse")
 
 
 exports.create = async (limit = null) => {
@@ -62,8 +62,8 @@ exports.create = async (limit = null) => {
     }
     // End utility functions
 
-    // let jhuData = await jhucsseScraper.fetchData()
-    let jhuData = await jhucsseScraper.fetchData
+    let jhuData = await jhucsseScraper.fetchData()
+    // let jhuData = await jhucsseScraper.fetchData
 
     jhuData = jhuData.map(thisJhu => thisJhu.data.map(thisRow => {
       thisRow.metric = thisJhu.name === 'confirmed_US' || thisJhu.name === 'confirmed_global' ? 'cases' : 'deaths'
@@ -242,7 +242,17 @@ exports.create = async (limit = null) => {
         location.rolledUp = true
         return location
       } else {
-
+        // const sum = (num1, num2) => { // utility function
+        //   // console.info(num1, num2)
+        //   // num1 = Number.isNaN(+(num1)) ? 0 : num1 // Handles cases where undefined or strings are passed
+        //   // num2 = Number.isNaN(+(num2)) ? 0 : num2
+        //   // console.info(num1, num2)
+        //   num1 = +(num1) || 0 // Casts the value passed to a Number. If it's a falsey value just assign it zero. 
+        //   num2 = +(num2) || 0
+        //   // console.info(num1, num2)
+        //   // console.info('')
+        //   return num1 + num2 
+        // }
         while(true) { // Hold up until all the subregions have calculated their aggregates. 
           for (let [key, value] of Object.entries(location.subregions)) {
             await calcAggs(value) // Basically, roll up all the subregions, then continue. Don't process other things until the subregions are finished processing. The subregions won't finish until their subregions are 
@@ -261,10 +271,10 @@ exports.create = async (limit = null) => {
             let thisCasesKey = caseDatesLeft.pop()
             let thisDeathKey = deathDatesLeft.pop()
             if(thisCasesKey) {
-              location.totals.daily.cases[thisCasesKey] = sum(location.totals.daily.cases[thisCasesKey], location.subregions[subregionKeys[i]].totals.daily.cases[thisCasesKey]) 
+              location.totals.daily.cases[thisCasesKey] = await sum(location.totals.daily.cases[thisCasesKey], location.subregions[subregionKeys[i]].totals.daily.cases[thisCasesKey]) 
             }
             if(thisDeathKey) {
-              location.totals.daily.deaths[thisDeathKey] = sum(location.totals.daily.deaths[thisDeathKey], location.subregions[subregionKeys[i]].totals.daily.deaths[thisDeathKey]) 
+              location.totals.daily.deaths[thisDeathKey] = await sum(location.totals.daily.deaths[thisDeathKey], location.subregions[subregionKeys[i]].totals.daily.deaths[thisDeathKey]) 
             }
           }
           i++
@@ -344,8 +354,8 @@ exports.create = async (limit = null) => {
 }
     */
 
-    // return jhuDataAggregated
-    console.info(jhuDataAggregated[0].data)
+    return jhuDataAggregated
+    // console.info(JSON.stringify(jhuDataAggregated[0].data.totals.daily))
     // console.info(JSON.stringify(globals.countryPopulations[0].fields))
   } catch(err) {
     console.error(err)
