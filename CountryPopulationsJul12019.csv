@@ -1,4 +1,4 @@
-module.exports = `"UNCountryNames","RawUNCountryPopulationEstimatesJul12019","UNCountryPopulationEstimatesJul12019"
+"UNCountryNames","RawUNCountryPopulationEstimatesJul12019","UNCountryPopulationEstimatesJul12019"
 "Burundi",11530.577,11530577
 "Comoros",850.891,850891
 "Djibouti",973.557,973557
@@ -238,4 +238,3 @@ module.exports = `"UNCountryNames","RawUNCountryPopulationEstimatesJul12019","UN
 "Greenland",56.66,5666
 "Saint Pierre and Miquelon",5.821,5821
 "United States of America",329064.917,329064917
-`

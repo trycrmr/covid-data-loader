@@ -1,5 +1,6 @@
 const globals = require('./globals');
 const jhucsseScraper = require("./jhucsseTest")
+const allPops = require("./mergePopulationSources")
 // const jhucsseScraper = require("./jhucsse")
 
 
@@ -268,14 +269,16 @@ exports.create = async (limit = null) => {
       }, {})
     }
 
-    globals.countryPopulations.forEach(thisPop => {
-      // console.info(thisPop.fields.value)
-      let locationNode = findLocation(thisPop.fields.country_name, jhuDataAggregated[0].data)
+    const allPopulations = await globals.allPops;
+    
+    Object.entries(allPopulations).forEach(thisPop => {
+      let [thisPopLoc, thisPopCount] = thisPop
+      let locationNode = findLocation(thisPopLoc, jhuDataAggregated[0].data)
       if(!locationNode) {
-        // console.info(`No pop for ${thisPop.fields.country_name}`)
+        console.info(`No pop for ${thisPopLoc}`)
         return undefined
       } else {
-        locationNode.population = thisPop.fields.value
+        locationNode.population = thisPopCount
         addPerCapitaMetric(locationNode, 'cases')
         addPerCapitaMetric(locationNode, 'deaths')
         addPerCapitaMetric(locationNode, 'caseChange')

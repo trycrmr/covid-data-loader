@@ -1,4 +1,4 @@
-module.exports = `STNAME,CTYNAME,POPESTIMATE2019
+STNAME,CTYNAME,POPESTIMATE2019
 Alabama,Alabama,4903185
 Alabama,Autauga County,55869
 Alabama,Baldwin County,223234
@@ -3192,4 +3192,3 @@ Wyoming,Teton County,23464
 Wyoming,Uinta County,20226
 Wyoming,Washakie County,7805
 Wyoming,Weston County,6927
-`
