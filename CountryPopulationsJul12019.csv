@@ -10,13 +10,13 @@
 "Mauritius",1269.67,126967
 "Mayotte",266.153,266153
 "Mozambique",30366.043,30366043
-"Réunion",888.932,888932
+"Reunion",888.932,888932
 "Rwanda",12626.938,12626938
 "Seychelles",97.741,97741
 "Somalia",15442.906,15442906
 "South Sudan",11062.114,11062114
 "Uganda",44269.587,44269587
-"United Republic of Tanzania",58005.461,58005461
+"Tanzania",58005.461,58005461
 "Zambia",17861.034,17861034
 "Zimbabwe",14645.473,14645473
 "Angola",31825.299,31825299
@@ -35,7 +35,7 @@
 "South Africa",58558.267,58558267
 "Benin",11801.151,11801151
 "Burkina Faso",20321.383,20321383
-"Cabo Verde",549.936,549936
+"Cape Verde",549.936,549936
 "Côte d'Ivoire",25716.554,25716554
 "Gambia",2347.696,2347696
 "Ghana",30417.858,30417858
@@ -57,7 +57,6 @@
 "Sudan",42813.237,42813237
 "Tunisia",11694.721,11694721
 "Western Sahara",582.458,582458
-"Western Asia",275324.793,275324793
 "Armenia",2957.728,2957728
 "Azerbaijan",10047.719,10047719
 "Bahrain",1641.164,1641164
@@ -71,8 +70,8 @@
 "Oman",4974.992,4974992
 "Qatar",2832.071,2832071
 "Saudi Arabia",34268.529,34268529
-"State of Palestine",4981.422,4981422
-"Syrian Arab Republic",17070.132,17070132
+"Palestinian Territory",4981.422,4981422
+"Syria",17070.132,17070132
 "Turkey",83429.607,83429607
 "United Arab Emirates",9770.526,9770526
 "Yemen",29161.922,29161922
@@ -85,30 +84,30 @@
 "Bangladesh",163046.173,163046173
 "Bhutan",763.094,763094
 "India",1366417.756,1366417756
-"Iran (Islamic Republic of)",82913.893,82913893
+"Iran",82913.893,82913893
 "Maldives",530.957,530957
 "Nepal",28608.715,28608715
 "Pakistan",216565.317,216565317
 "Sri Lanka",21323.734,21323734
 "China",1433783.692,1433783692
-"China, Hong Kong SAR",7436.157,7436157
-"China, Macao SAR",640.446,640446
-"China, Taiwan Province of China",23773.881,23773881
+"Hong Kong",7436.157,7436157
+"China",640.446,640446
+"Taiwan",23773.881,23773881
 "Dem. People's Republic of Korea",25666.158,25666158
 "Japan",126860.299,126860299
 "Mongolia",3225.166,3225166
-"Republic of Korea",51225.321,51225321
-"Brunei Darussalam",433.296,433296
+"South Korea",51225.321,51225321
+"Brunei",433.296,433296
 "Cambodia",16486.542,16486542
 "Indonesia",270625.567,270625567
-"Lao People's Democratic Republic",7169.456,7169456
+"Laos",7169.456,7169456
 "Malaysia",31949.789,31949789
 "Myanmar",54045.422,54045422
 "Philippines",108116.622,108116622
 "Singapore",5804.343,5804343
 "Thailand",69625.581,69625581
-"Timor-Leste",1293.12,129312
-"Viet Nam",96462.108,96462108
+"East Timor",1293.12,129312
+"Vietnam",96462.108,96462108
 "Anguilla",14.872,14872
 "Antigua and Barbuda",97.115,97115
 "Aruba",106.31,10631
@@ -118,7 +117,7 @@
 "British Virgin Islands",30.033,30033
 "Cayman Islands",64.948,64948
 "Cuba",11333.484,11333484
-"Curaçao",163.423,163423
+"Curacao",163.423,163423
 "Dominica",71.808,71808
 "Dominican Republic",10738.957,10738957
 "Grenada",112.002,112002
@@ -128,15 +127,15 @@
 "Martinique",375.557,375557
 "Montserrat",4.991,4991
 "Puerto Rico",2933.404,2933404
-"Saint Barthélemy",9.853,9853
+"Saint Barthelemy",9.853,9853
 "Saint Kitts and Nevis",52.834,52834
 "Saint Lucia",182.795,182795
-"Saint Martin (French part)",38.002,38002
+"St Martin",38.002,38002
 "Saint Vincent and the Grenadines",110.593,110593
-"Sint Maarten (Dutch part)",42.389,42389
+"Sint Maarten",42.389,42389
 "Trinidad and Tobago",1394.969,1394969
 "Turks and Caicos Islands",38.194,38194
-"United States Virgin Islands",104.579,104579
+"U.S. Virgin Islands",104.579,104579
 "Belize",390.351,390351
 "Costa Rica",5047.561,5047561
 "El Salvador",6453.55,645355
@@ -146,7 +145,7 @@
 "Nicaragua",6545.503,6545503
 "Panama",4246.44,424644
 "Argentina",44780.675,44780675
-"Bolivia (Plurinational State of)",11513.102,11513102
+"Bolivia",11513.102,11513102
 "Brazil",211049.519,211049519
 "Chile",18952.035,18952035
 "Colombia",50339.443,50339443
@@ -158,7 +157,7 @@
 "Peru",32510.462,32510462
 "Suriname",581.363,581363
 "Uruguay",3461.731,3461731
-"Venezuela (Bolivarian Republic of)",28515.829,28515829
+"Venezuela",28515.829,28515829
 "Australia",25203.2,252032
 "New Zealand",4783.062,4783062
 "Melanesia",10918.534,10918534
@@ -190,9 +189,9 @@
 "Czechia",10689.213,10689213
 "Hungary",9684.68,968468
 "Poland",37887.771,37887771
-"Republic of Moldova",4043.258,4043258
+"Moldova",4043.258,4043258
 "Romania",19364.558,19364558
-"Russian Federation",145872.26,14587226
+"Russia",145872.26,14587226
 "Slovakia",5457.012,5457012
 "Ukraine",43993.643,43993643
 "Channel Islands",172.264,172264
@@ -214,11 +213,11 @@
 "Croatia",4130.299,4130299
 "Gibraltar",33.706,33706
 "Greece",10473.452,10473452
-"Holy See",0.815,815
+"Vatican",0.815,815
 "Italy",60550.092,60550092
 "Malta",440.377,440377
 "Montenegro",627.988,627988
-"North Macedonia",2083.458,2083458
+"Macedonia",2083.458,2083458
 "Portugal",10226.178,10226178
 "San Marino",33.864,33864
 "Serbia",8772.228,8772228
@@ -237,4 +236,4 @@
 "Canada",37411.038,37411038
 "Greenland",56.66,5666
 "Saint Pierre and Miquelon",5.821,5821
-"United States of America",329064.917,329064917
+"United States",329064.917,329064917

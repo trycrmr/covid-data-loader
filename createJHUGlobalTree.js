@@ -95,7 +95,23 @@ exports.create = async (limit = null) => {
         if(globals.Admin2Exclusions.includes(thisRow["Admin2"])) { // JHU data as some fill-ins where they didn't know the county (ex. "Out of NY")
           return { ...thisRow }
         } else {
-          return { ...thisRow, location: [ ...thisRow.location, `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`] }
+          return { ...thisRow, location: [ ...thisRow.location, 
+            `${
+              thisRow["Province_State"] === 'Louisiana' // Louisiana calls them "Parishes". Leaving these alone and removing "Parish" from the population data.
+              ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}` 
+              : thisRow["Province_State"] === 'Alaska'
+              ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
+              : thisRow["Admin2"] === 'Baltimore City'
+              ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
+              : thisRow["Admin2"] === 'St. Louis City'
+              ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
+              : thisRow["Admin2"] === 'Carson City'
+              ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
+              : thisRow["Admin2"].includes('County') // Alaska calls them "Boroughs". Leaving these alone and removing "Boroughs" from the population data.
+              ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
+              : `${thisRow["Admin2"]} County, ${thisRow["Province_State"]}`
+            }`
+          ]}
         }
       } else {
         return { ...thisRow }
@@ -275,7 +291,7 @@ exports.create = async (limit = null) => {
       let [thisPopLoc, thisPopCount] = thisPop
       let locationNode = findLocation(thisPopLoc, jhuDataAggregated[0].data)
       if(!locationNode) {
-        console.info(`No pop for ${thisPopLoc}`)
+        // console.info(`No pop for ${thisPopLoc}`) // There are several locations that do not have a population mapping at the moment. Each is their own issue to debug. Example: Virginia cities *might* not be included in the county population the city resides in. In which case a mapping of cities to their counties with an aggregate calculation would need to be created. I'm not gonna do that right now. Sometime! Will open an issue on github later. 
         return undefined
       } else {
         locationNode.population = thisPopCount
@@ -298,7 +314,7 @@ exports.create = async (limit = null) => {
     */
 
     // return jhuDataAggregated
-    console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Europe"].subregions["Albania"]))
+    console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Africa"], null, 1))
     // console.info(JSON.stringify(globals.countryPopulations[0].fields))
   } catch(err) {
     console.error(err)

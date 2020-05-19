@@ -1,5 +1,5 @@
 STNAME,CTYNAME,POPESTIMATE2019
-Alabama,Alabama,4903185
+Alabama,,4903185
 Alabama,Autauga County,55869
 Alabama,Baldwin County,223234
 Alabama,Barbour County,24686
@@ -67,37 +67,37 @@ Alabama,Walker County,63521
 Alabama,Washington County,16326
 Alabama,Wilcox County,10373
 Alabama,Winston County,23629
-Alaska,Alaska,731545
-Alaska,Aleutians East Borough,3337
-Alaska,Aleutians West Census Area,5634
-Alaska,Anchorage Municipality,288000
-Alaska,Bethel Census Area,18386
-Alaska,Bristol Bay Borough,836
-Alaska,Denali Borough,2097
-Alaska,Dillingham Census Area,4916
-Alaska,Fairbanks North Star Borough,96849
-Alaska,Haines Borough,2530
-Alaska,Hoonah-Angoon Census Area,2148
-Alaska,Juneau City and Borough,31974
-Alaska,Kenai Peninsula Borough,58708
-Alaska,Ketchikan Gateway Borough,13901
-Alaska,Kodiak Island Borough,12998
-Alaska,Kusilvak Census Area,8314
-Alaska,Lake and Peninsula Borough,1592
-Alaska,Matanuska-Susitna Borough,108317
-Alaska,Nome Census Area,10004
-Alaska,North Slope Borough,9832
-Alaska,Northwest Arctic Borough,7621
-Alaska,Petersburg Borough,3266
-Alaska,Prince of Wales-Hyder Census Area,6203
-Alaska,Sitka City and Borough,8493
-Alaska,Skagway Municipality,1183
-Alaska,Southeast Fairbanks Census Area,6893
-Alaska,Valdez-Cordova Census Area,9202
-Alaska,Wrangell City and Borough,2502
-Alaska,Yakutat City and Borough,579
-Alaska,Yukon-Koyukuk Census Area,5230
-Arizona,Arizona,7278717
+Alaska,,731545
+Alaska,Aleutians East,3337
+Alaska,Aleutians West,5634
+Alaska,Anchorage,288000
+Alaska,Bethel,18386
+Alaska,Bristol Bay,836
+Alaska,Denali,2097
+Alaska,Dillingham,4916
+Alaska,Fairbanks North Star,96849
+Alaska,Haines,2530
+Alaska,Hoonah-Angoon,2148
+Alaska,Juneau,31974
+Alaska,Kenai Peninsula,58708
+Alaska,Ketchikan Gateway,13901
+Alaska,Kodiak Island,12998
+Alaska,Kusilvak,8314
+Alaska,Lake and Peninsula,1592
+Alaska,Matanuska-Susitna,108317
+Alaska,Nome,10004
+Alaska,North Slope,9832
+Alaska,Northwest Arctic,7621
+Alaska,Petersburg,3266
+Alaska,Prince of Wales-Hyder,6203
+Alaska,Sitka,8493
+Alaska,Skagway,1183
+Alaska,Southeast Fairbanks,6893
+Alaska,Valdez-Cordova,9202
+Alaska,Wrangell,2502
+Alaska,Yakutat,579
+Alaska,Yukon-Koyukuk,5230
+Arizona,,7278717
 Arizona,Apache County,71887
 Arizona,Cochise County,125922
 Arizona,Coconino County,143476
@@ -113,7 +113,7 @@ Arizona,Pinal County,462789
 Arizona,Santa Cruz County,46498
 Arizona,Yavapai County,235099
 Arizona,Yuma County,213787
-Arkansas,Arkansas,3017804
+Arkansas,,3017804
 Arkansas,Arkansas County,17486
 Arkansas,Ashley County,19657
 Arkansas,Baxter County,41932
@@ -189,7 +189,7 @@ Arkansas,Washington County,239187
 Arkansas,White County,78753
 Arkansas,Woodruff County,6320
 Arkansas,Yell County,21341
-California,California,39512223
+California,,39512223
 California,Alameda County,1671329
 California,Alpine County,1129
 California,Amador County,39752
@@ -248,7 +248,7 @@ California,Tuolumne County,54478
 California,Ventura County,846006
 California,Yolo County,220500
 California,Yuba County,78668
-Colorado,Colorado,5758736
+Colorado,,5758736
 Colorado,Adams County,517421
 Colorado,Alamosa County,16233
 Colorado,Arapahoe County,656590
@@ -313,7 +313,7 @@ Colorado,Teller County,25388
 Colorado,Washington County,4908
 Colorado,Weld County,324492
 Colorado,Yuma County,10019
-Connecticut,Connecticut,3565287
+Connecticut,,3565287
 Connecticut,Fairfield County,943332
 Connecticut,Hartford County,891720
 Connecticut,Litchfield County,180333
@@ -322,13 +322,13 @@ Connecticut,New Haven County,854757
 Connecticut,New London County,265206
 Connecticut,Tolland County,150721
 Connecticut,Windham County,116782
-Delaware,Delaware,973764
+Delaware,,973764
 Delaware,Kent County,180786
 Delaware,New Castle County,558753
 Delaware,Sussex County,234225
+District of Columbia,,705749
 District of Columbia,District of Columbia,705749
-District of Columbia,District of Columbia,705749
-Florida,Florida,21477737
+Florida,,21477737
 Florida,Alachua County,269043
 Florida,Baker County,29210
 Florida,Bay County,174705
@@ -396,7 +396,7 @@ Florida,Volusia County,553284
 Florida,Wakulla County,33739
 Florida,Walton County,74071
 Florida,Washington County,25473
-Georgia,Georgia,10617423
+Georgia,,10617423
 Georgia,Appling County,18386
 Georgia,Atkinson County,8165
 Georgia,Bacon County,11164
@@ -556,13 +556,13 @@ Georgia,Wilcox County,8635
 Georgia,Wilkes County,9777
 Georgia,Wilkinson County,8954
 Georgia,Worth County,20247
-Hawaii,Hawaii,1415872
+Hawaii,,1415872
 Hawaii,Hawaii County,201513
 Hawaii,Honolulu County,974563
 Hawaii,Kalawao County,86
 Hawaii,Kauai County,72293
 Hawaii,Maui County,167417
-Idaho,Idaho,1787065
+Idaho,,1787065
 Idaho,Ada County,481587
 Idaho,Adams County,4294
 Idaho,Bannock County,87808
@@ -607,7 +607,7 @@ Idaho,Teton County,12142
 Idaho,Twin Falls County,86878
 Idaho,Valley County,11392
 Idaho,Washington County,10194
-Illinois,Illinois,12671821
+Illinois,,12671821
 Illinois,Adams County,65435
 Illinois,Alexander County,5761
 Illinois,Bond County,16426
@@ -710,7 +710,7 @@ Illinois,Will County,690743
 Illinois,Williamson County,66597
 Illinois,Winnebago County,282572
 Illinois,Woodford County,38459
-Indiana,Indiana,6732219
+Indiana,,6732219
 Indiana,Adams County,35777
 Indiana,Allen County,379299
 Indiana,Bartholomew County,83779
@@ -803,7 +803,7 @@ Indiana,Wayne County,65884
 Indiana,Wells County,28296
 Indiana,White County,24102
 Indiana,Whitley County,33964
-Iowa,Iowa,3155070
+Iowa,,3155070
 Iowa,Adair County,7152
 Iowa,Adams County,3602
 Iowa,Allamakee County,13687
@@ -903,7 +903,7 @@ Iowa,Winneshiek County,19991
 Iowa,Woodbury County,103107
 Iowa,Worth County,7381
 Iowa,Wright County,12562
-Kansas,Kansas,2913314
+Kansas,,2913314
 Kansas,Allen County,12369
 Kansas,Anderson County,7858
 Kansas,Atchison County,16073
@@ -1009,7 +1009,7 @@ Kansas,Wichita County,2119
 Kansas,Wilson County,8525
 Kansas,Woodson County,3138
 Kansas,Wyandotte County,165429
-Kentucky,Kentucky,4467673
+Kentucky,,4467673
 Kentucky,Adair County,19202
 Kentucky,Allen County,21315
 Kentucky,Anderson County,22747
@@ -1130,72 +1130,72 @@ Kentucky,Webster County,12942
 Kentucky,Whitley County,36264
 Kentucky,Wolfe County,7157
 Kentucky,Woodford County,26734
-Louisiana,Louisiana,4648794
-Louisiana,Acadia Parish,62045
-Louisiana,Allen Parish,25627
-Louisiana,Ascension Parish,126604
-Louisiana,Assumption Parish,21891
-Louisiana,Avoyelles Parish,40144
-Louisiana,Beauregard Parish,37497
-Louisiana,Bienville Parish,13241
-Louisiana,Bossier Parish,127039
-Louisiana,Caddo Parish,240204
-Louisiana,Calcasieu Parish,203436
-Louisiana,Caldwell Parish,9918
-Louisiana,Cameron Parish,6973
-Louisiana,Catahoula Parish,9494
-Louisiana,Claiborne Parish,15670
-Louisiana,Concordia Parish,19259
-Louisiana,De Soto Parish,27463
-Louisiana,East Baton Rouge Parish,440059
-Louisiana,East Carroll Parish,6861
-Louisiana,East Feliciana Parish,19135
-Louisiana,Evangeline Parish,33395
-Louisiana,Franklin Parish,20015
-Louisiana,Grant Parish,22389
-Louisiana,Iberia Parish,69830
-Louisiana,Iberville Parish,32511
-Louisiana,Jackson Parish,15744
-Louisiana,Jefferson Parish,432493
-Louisiana,Jefferson Davis Parish,31368
-Louisiana,Lafayette Parish,244390
-Louisiana,Lafourche Parish,97614
-Louisiana,LaSalle Parish,14892
-Louisiana,Lincoln Parish,46742
-Louisiana,Livingston Parish,140789
-Louisiana,Madison Parish,10951
-Louisiana,Morehouse Parish,24874
-Louisiana,Natchitoches Parish,38158
-Louisiana,Orleans Parish,390144
-Louisiana,Ouachita Parish,153279
-Louisiana,Plaquemines Parish,23197
-Louisiana,Pointe Coupee Parish,21730
-Louisiana,Rapides Parish,129648
-Louisiana,Red River Parish,8442
-Louisiana,Richland Parish,20122
-Louisiana,Sabine Parish,23884
-Louisiana,St. Bernard Parish,47244
-Louisiana,St. Charles Parish,53100
-Louisiana,St. Helena Parish,10132
-Louisiana,St. James Parish,21096
-Louisiana,St. John the Baptist Parish,42837
-Louisiana,St. Landry Parish,82124
-Louisiana,St. Martin Parish,53431
-Louisiana,St. Mary Parish,49348
-Louisiana,St. Tammany Parish,260419
-Louisiana,Tangipahoa Parish,134758
-Louisiana,Tensas Parish,4334
-Louisiana,Terrebonne Parish,110461
-Louisiana,Union Parish,22108
-Louisiana,Vermilion Parish,59511
-Louisiana,Vernon Parish,47429
-Louisiana,Washington Parish,46194
-Louisiana,Webster Parish,38340
-Louisiana,West Baton Rouge Parish,26465
-Louisiana,West Carroll Parish,10830
-Louisiana,West Feliciana Parish,15568
-Louisiana,Winn Parish,13904
-Maine,Maine,1344212
+Louisiana,,4648794
+Louisiana,Acadia,62045
+Louisiana,Allen,25627
+Louisiana,Ascension,126604
+Louisiana,Assumption,21891
+Louisiana,Avoyelles,40144
+Louisiana,Beauregard,37497
+Louisiana,Bienville,13241
+Louisiana,Bossier,127039
+Louisiana,Caddo,240204
+Louisiana,Calcasieu,203436
+Louisiana,Caldwell,9918
+Louisiana,Cameron,6973
+Louisiana,Catahoula,9494
+Louisiana,Claiborne,15670
+Louisiana,Concordia,19259
+Louisiana,De Soto,27463
+Louisiana,East Baton Rouge,440059
+Louisiana,East Carroll,6861
+Louisiana,East Feliciana,19135
+Louisiana,Evangeline,33395
+Louisiana,Franklin,20015
+Louisiana,Grant,22389
+Louisiana,Iberia,69830
+Louisiana,Iberville,32511
+Louisiana,Jackson,15744
+Louisiana,Jefferson,432493
+Louisiana,Jefferson Davis,31368
+Louisiana,Lafayette,244390
+Louisiana,Lafourche,97614
+Louisiana,LaSalle,14892
+Louisiana,Lincoln,46742
+Louisiana,Livingston,140789
+Louisiana,Madison,10951
+Louisiana,Morehouse,24874
+Louisiana,Natchitoches,38158
+Louisiana,Orleans,390144
+Louisiana,Ouachita,153279
+Louisiana,Plaquemines,23197
+Louisiana,Pointe Coupee,21730
+Louisiana,Rapides,129648
+Louisiana,Red River,8442
+Louisiana,Richland,20122
+Louisiana,Sabine,23884
+Louisiana,St. Bernard,47244
+Louisiana,St. Charles,53100
+Louisiana,St. Helena,10132
+Louisiana,St. James,21096
+Louisiana,St. John the Baptist,42837
+Louisiana,St. Landry,82124
+Louisiana,St. Martin,53431
+Louisiana,St. Mary,49348
+Louisiana,St. Tammany,260419
+Louisiana,Tangipahoa,134758
+Louisiana,Tensas,4334
+Louisiana,Terrebonne,110461
+Louisiana,Union,22108
+Louisiana,Vermilion,59511
+Louisiana,Vernon,47429
+Louisiana,Washington,46194
+Louisiana,Webster,38340
+Louisiana,West Baton Rouge,26465
+Louisiana,West Carroll,10830
+Louisiana,West Feliciana,15568
+Louisiana,Winn,13904
+Maine,,1344212
 Maine,Androscoggin County,108277
 Maine,Aroostook County,67055
 Maine,Cumberland County,295003
@@ -1212,7 +1212,7 @@ Maine,Somerset County,50484
 Maine,Waldo County,39715
 Maine,Washington County,31379
 Maine,York County,207641
-Maryland,Maryland,6045680
+Maryland,,6045680
 Maryland,Allegany County,70416
 Maryland,Anne Arundel County,579234
 Maryland,Baltimore County,827370
@@ -1236,8 +1236,8 @@ Maryland,Talbot County,37181
 Maryland,Washington County,151049
 Maryland,Wicomico County,103609
 Maryland,Worcester County,52276
-Maryland,Baltimore city,593490
-Massachusetts,Massachusetts,6892503
+Maryland,Baltimore City,593490
+Massachusetts,,6892503
 Massachusetts,Barnstable County,212990
 Massachusetts,Berkshire County,124944
 Massachusetts,Bristol County,565217
@@ -1252,7 +1252,7 @@ Massachusetts,Norfolk County,706775
 Massachusetts,Plymouth County,521202
 Massachusetts,Suffolk County,803907
 Massachusetts,Worcester County,830622
-Michigan,Michigan,9986857
+Michigan,,9986857
 Michigan,Alcona County,10405
 Michigan,Alger County,9108
 Michigan,Allegan County,118081
@@ -1336,7 +1336,7 @@ Michigan,Van Buren County,75677
 Michigan,Washtenaw County,367601
 Michigan,Wayne County,1749343
 Michigan,Wexford County,33631
-Minnesota,Minnesota,5639632
+Minnesota,,5639632
 Minnesota,Aitkin County,15886
 Minnesota,Anoka County,356921
 Minnesota,Becker County,34423
@@ -1424,7 +1424,7 @@ Minnesota,Wilkin County,6207
 Minnesota,Winona County,50484
 Minnesota,Wright County,138377
 Minnesota,Yellow Medicine County,9709
-Mississippi,Mississippi,2976149
+Mississippi,,2976149
 Mississippi,Adams County,30693
 Mississippi,Alcorn County,36953
 Mississippi,Amite County,12297
@@ -1507,7 +1507,7 @@ Mississippi,Wilkinson County,8630
 Mississippi,Winston County,17955
 Mississippi,Yalobusha County,12108
 Mississippi,Yazoo County,29690
-Missouri,Missouri,6137428
+Missouri,,6137428
 Missouri,Adair County,25343
 Missouri,Andrew County,17712
 Missouri,Atchison County,5143
@@ -1622,8 +1622,8 @@ Missouri,Wayne County,12873
 Missouri,Webster County,39592
 Missouri,Worth County,2013
 Missouri,Wright County,18289
-Missouri,St. Louis city,300576
-Montana,Montana,1068778
+Missouri,St. Louis City,300576
+Montana,,1068778
 Montana,Beaverhead County,9453
 Montana,Big Horn County,13319
 Montana,Blaine County,6681
@@ -1680,7 +1680,7 @@ Montana,Valley County,7396
 Montana,Wheatland County,2126
 Montana,Wibaux County,969
 Montana,Yellowstone County,161300
-Nebraska,Nebraska,1934408
+Nebraska,,1934408
 Nebraska,Adams County,31363
 Nebraska,Antelope County,6298
 Nebraska,Arthur County,463
@@ -1774,7 +1774,7 @@ Nebraska,Wayne County,9385
 Nebraska,Webster County,3487
 Nebraska,Wheeler County,783
 Nebraska,York County,13679
-Nevada,Nevada,3080156
+Nevada,,3080156
 Nevada,Churchill County,24909
 Nevada,Clark County,2266715
 Nevada,Douglas County,48905
@@ -1792,7 +1792,7 @@ Nevada,Storey County,4123
 Nevada,Washoe County,471519
 Nevada,White Pine County,9580
 Nevada,Carson City,55916
-New Hampshire,New Hampshire,1359711
+New Hampshire,,1359711
 New Hampshire,Belknap County,61303
 New Hampshire,Carroll County,48910
 New Hampshire,Cheshire County,76085
@@ -1803,7 +1803,7 @@ New Hampshire,Merrimack County,151391
 New Hampshire,Rockingham County,309769
 New Hampshire,Strafford County,130633
 New Hampshire,Sullivan County,43146
-New Jersey,New Jersey,8882190
+New Jersey,,8882190
 New Jersey,Atlantic County,263670
 New Jersey,Bergen County,932202
 New Jersey,Burlington County,445349
@@ -1825,7 +1825,7 @@ New Jersey,Somerset County,328934
 New Jersey,Sussex County,140488
 New Jersey,Union County,556341
 New Jersey,Warren County,105267
-New Mexico,New Mexico,2096829
+New Mexico,,2096829
 New Mexico,Bernalillo County,679121
 New Mexico,Catron County,3527
 New Mexico,Chaves County,64615
@@ -1833,7 +1833,7 @@ New Mexico,Cibola County,26675
 New Mexico,Colfax County,11941
 New Mexico,Curry County,48954
 New Mexico,De Baca County,1748
-New Mexico,Do�a Ana County,218195
+New Mexico,Dona Ana County,218195
 New Mexico,Eddy County,58460
 New Mexico,Grant County,26998
 New Mexico,Guadalupe County,4300
@@ -1859,7 +1859,7 @@ New Mexico,Taos County,32723
 New Mexico,Torrance County,15461
 New Mexico,Union County,4059
 New Mexico,Valencia County,76688
-New York,New York,19453561
+New York,,19453561
 New York,Albany County,305506
 New York,Allegany County,46091
 New York,Bronx County,1418207
@@ -1922,7 +1922,7 @@ New York,Wayne County,89918
 New York,Westchester County,967506
 New York,Wyoming County,39859
 New York,Yates County,24913
-North Carolina,North Carolina,10488084
+North Carolina,,10488084
 North Carolina,Alamance County,169509
 North Carolina,Alexander County,37497
 North Carolina,Alleghany County,11137
@@ -2023,7 +2023,7 @@ North Carolina,Wilkes County,68412
 North Carolina,Wilson County,81801
 North Carolina,Yadkin County,37667
 North Carolina,Yancey County,18069
-North Dakota,North Dakota,762062
+North Dakota,,762062
 North Dakota,Adams County,2216
 North Dakota,Barnes County,10415
 North Dakota,Benson County,6832
@@ -2077,7 +2077,7 @@ North Dakota,Walsh County,10641
 North Dakota,Ward County,67641
 North Dakota,Wells County,3834
 North Dakota,Williams County,37589
-Ohio,Ohio,11689100
+Ohio,,11689100
 Ohio,Adams County,27698
 Ohio,Allen County,102351
 Ohio,Ashland County,53484
@@ -2166,7 +2166,7 @@ Ohio,Wayne County,115710
 Ohio,Williams County,36692
 Ohio,Wood County,130817
 Ohio,Wyandot County,21772
-Oklahoma,Oklahoma,3956971
+Oklahoma,,3956971
 Oklahoma,Adair County,22194
 Oklahoma,Alfalfa County,5702
 Oklahoma,Atoka County,13758
@@ -2244,7 +2244,7 @@ Oklahoma,Washington County,51527
 Oklahoma,Washita County,10916
 Oklahoma,Woods County,8793
 Oklahoma,Woodward County,20211
-Oregon,Oregon,4217737
+Oregon,,4217737
 Oregon,Baker County,16124
 Oregon,Benton County,93053
 Oregon,Clackamas County,418187
@@ -2281,7 +2281,7 @@ Oregon,Wasco County,26682
 Oregon,Washington County,601592
 Oregon,Wheeler County,1332
 Oregon,Yamhill County,107100
-Pennsylvania,Pennsylvania,12801989
+Pennsylvania,,12801989
 Pennsylvania,Adams County,103009
 Pennsylvania,Allegheny County,1216045
 Pennsylvania,Armstrong County,64735
@@ -2349,13 +2349,13 @@ Pennsylvania,Wayne County,51361
 Pennsylvania,Westmoreland County,348899
 Pennsylvania,Wyoming County,26794
 Pennsylvania,York County,449058
-Rhode Island,Rhode Island,1059361
+Rhode Island,,1059361
 Rhode Island,Bristol County,48479
 Rhode Island,Kent County,164292
 Rhode Island,Newport County,82082
 Rhode Island,Providence County,638931
 Rhode Island,Washington County,125577
-South Carolina,South Carolina,5148714
+South Carolina,,5148714
 South Carolina,Abbeville County,24527
 South Carolina,Aiken County,170872
 South Carolina,Allendale County,8688
@@ -2402,7 +2402,7 @@ South Carolina,Sumter County,106721
 South Carolina,Union County,27316
 South Carolina,Williamsburg County,30368
 South Carolina,York County,280979
-South Dakota,South Dakota,884659
+South Dakota,,884659
 South Dakota,Aurora County,2751
 South Dakota,Beadle County,18453
 South Dakota,Bennett County,3365
@@ -2469,7 +2469,7 @@ South Dakota,Union County,15932
 South Dakota,Walworth County,5435
 South Dakota,Yankton County,22814
 South Dakota,Ziebach County,2756
-Tennessee,Tennessee,6829174
+Tennessee,,6829174
 Tennessee,Anderson County,76978
 Tennessee,Bedford County,49713
 Tennessee,Benton County,16160
@@ -2565,7 +2565,7 @@ Tennessee,Weakley County,33328
 Tennessee,White County,27345
 Tennessee,Williamson County,238412
 Tennessee,Wilson County,144657
-Texas,Texas,28995881
+Texas,,28995881
 Texas,Anderson County,57735
 Texas,Andrews County,18705
 Texas,Angelina County,86715
@@ -2820,7 +2820,7 @@ Texas,Yoakum County,8713
 Texas,Young County,18010
 Texas,Zapata County,14179
 Texas,Zavala County,11840
-Utah,Utah,3205958
+Utah,,3205958
 Utah,Beaver County,6710
 Utah,Box Elder County,56046
 Utah,Cache County,128289
@@ -2850,7 +2850,7 @@ Utah,Wasatch County,34091
 Utah,Washington County,177556
 Utah,Wayne County,2711
 Utah,Weber County,260213
-Vermont,Vermont,623989
+Vermont,,623989
 Vermont,Addison County,36777
 Vermont,Bennington County,35470
 Vermont,Caledonia County,29993
@@ -2865,7 +2865,7 @@ Vermont,Rutland County,58191
 Vermont,Washington County,58409
 Vermont,Windham County,42222
 Vermont,Windsor County,55062
-Virginia,Virginia,8535519
+Virginia,,8535519
 Virginia,Accomack County,32316
 Virginia,Albemarle County,109330
 Virginia,Alleghany County,14860
@@ -2999,7 +2999,7 @@ Virginia,Virginia Beach city,449974
 Virginia,Waynesboro city,22630
 Virginia,Williamsburg city,14954
 Virginia,Winchester city,28078
-Washington,Washington,7614893
+Washington,,7614893
 Washington,Adams County,19983
 Washington,Asotin County,22582
 Washington,Benton County,204390
@@ -3039,7 +3039,7 @@ Washington,Walla Walla County,60760
 Washington,Whatcom County,229247
 Washington,Whitman County,50104
 Washington,Yakima County,250873
-West Virginia,West Virginia,1792147
+West Virginia,,1792147
 West Virginia,Barbour County,16441
 West Virginia,Berkeley County,119171
 West Virginia,Boone County,21457
@@ -3095,7 +3095,7 @@ West Virginia,Wetzel County,15065
 West Virginia,Wirt County,5821
 West Virginia,Wood County,83518
 West Virginia,Wyoming County,20394
-Wisconsin,Wisconsin,5822434
+Wisconsin,,5822434
 Wisconsin,Adams County,20220
 Wisconsin,Ashland County,15562
 Wisconsin,Barron County,45244
@@ -3168,7 +3168,7 @@ Wisconsin,Waupaca County,50990
 Wisconsin,Waushara County,24443
 Wisconsin,Winnebago County,171907
 Wisconsin,Wood County,72999
-Wyoming,Wyoming,578759
+Wyoming,,578759
 Wyoming,Albany County,38880
 Wyoming,Big Horn County,11790
 Wyoming,Campbell County,46341

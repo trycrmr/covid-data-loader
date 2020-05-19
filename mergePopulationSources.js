@@ -11,7 +11,11 @@ const getJSON = (async () => {
         // console.info(curr)
         acc[curr.UNCountryNames] = curr.UNCountryPopulationEstimatesJul12019
       } else {
-        acc[`${curr.CTYNAME}, ${curr.STNAME}`] = curr.POPESTIMATE2019
+        if(curr.CTYNAME) {
+          acc[`${curr.CTYNAME}, ${curr.STNAME}`] = curr.POPESTIMATE2019
+        } else {
+          acc[`${curr.STNAME}`] = curr.POPESTIMATE2019
+        }
       }
       return acc
     }, {})
