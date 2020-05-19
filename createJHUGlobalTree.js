@@ -8,6 +8,14 @@ exports.create = async (limit = null) => {
   try {
 
     // Utility functions
+    const sum = async (num1, num2) => { // utility function
+      num1 = Number.isNaN(+(num1)) ? 0 : num1 // Handles cases where undefined or strings are passed
+      num2 = Number.isNaN(+(num2)) ? 0 : num2
+      num1 = +(num1) || 0 // Casts the value passed to a Number. If it's a falsey value just assign it zero. 
+      num2 = +(num2) || 0
+      return num1 + num2 
+    }
+
     const limiter = (obj, limit) => {
       if(!limit) return obj
       return Object.entries(sortObj(obj))
@@ -234,11 +242,6 @@ exports.create = async (limit = null) => {
         location.rolledUp = true
         return location
       } else {
-        const sum = (num1, num2) => { // utility function
-          num1 = +(num1) || 0 // Casts the value passed to a Number. If it's a falsey value just assign it zero. 
-          num2 = +(num2) || 0
-          return num1 + num2 
-        }
 
         while(true) { // Hold up until all the subregions have calculated their aggregates. 
           for (let [key, value] of Object.entries(location.subregions)) {
@@ -285,7 +288,7 @@ exports.create = async (limit = null) => {
       }, {})
     }
 
-    const allPopulations = await globals.allPops;
+    const allPopulations = await globals.allPops // I'd rather not have globals return a promise because that feels weird, but here we are.
     
     Object.entries(allPopulations).forEach(thisPop => {
       let [thisPopLoc, thisPopCount] = thisPop
@@ -302,6 +305,34 @@ exports.create = async (limit = null) => {
       }
     })
 
+    const sumSubregionPopulations = async locationNode => {
+      let subTotalPop = 0
+      let subregionKeys = Object.keys(locationNode.subregions)
+      while(subregionKeys.length > 0) {
+        let thisSubregionKey = subregionKeys.pop()
+        if("population" in locationNode.subregions[thisSubregionKey]) {
+          subTotalPop = subTotalPop + await sum(locationNode.population, locationNode.subregions[thisSubregionKey].population)
+        }
+      }
+      locationNode.population = subTotalPop
+    }
+
+    // This next bit purposefully only sums the populations for the continents and the Earth because we have populations for nearly all the countries, but not at the continent or planet level
+    let earthSubregionKeys = Object.keys(jhuDataAggregated[0].data.subregions)
+    while(earthSubregionKeys.length > 0) {
+      let thisEarthSubregionKey = earthSubregionKeys.pop()
+      await sumSubregionPopulations(jhuDataAggregated[0].data.subregions[thisEarthSubregionKey])
+      addPerCapitaMetric(jhuDataAggregated[0].data.subregions[thisEarthSubregionKey], 'cases')
+      addPerCapitaMetric(jhuDataAggregated[0].data.subregions[thisEarthSubregionKey], 'deaths')
+      addPerCapitaMetric(jhuDataAggregated[0].data.subregions[thisEarthSubregionKey], 'caseChange')
+      addPerCapitaMetric(jhuDataAggregated[0].data.subregions[thisEarthSubregionKey], 'deathsChange')
+    }
+    await sumSubregionPopulations(jhuDataAggregated[0].data)
+    addPerCapitaMetric(jhuDataAggregated[0].data, 'cases')
+    addPerCapitaMetric(jhuDataAggregated[0].data, 'deaths')
+    addPerCapitaMetric(jhuDataAggregated[0].data, 'caseChange')
+    addPerCapitaMetric(jhuDataAggregated[0].data, 'deathsChange')
+
     /* calcAggs schema
 {
   name: 'Earth',
@@ -314,7 +345,7 @@ exports.create = async (limit = null) => {
     */
 
     // return jhuDataAggregated
-    console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["Africa"], null, 1))
+    console.info(jhuDataAggregated[0].data)
     // console.info(JSON.stringify(globals.countryPopulations[0].fields))
   } catch(err) {
     console.error(err)
