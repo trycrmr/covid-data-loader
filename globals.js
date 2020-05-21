@@ -127,7 +127,9 @@ exports.stringToISOMap = {
   }
 }
 
-exports.Admin2Exclusions = ["Out of AK","Out of AZ","Out of AR","Out of CA","Out of CO","Out of CT","Out of DE","Out of AL","Out of DC","Out of FL","Out of GA","Out of HI","Out of ID","Out of IL","Out of IN","Out of IA","Out of KS","Out of KY","Out of LA","Out of ME","Out of MD","Out of MA","Out of MI","Out of MN","Out of MS","Out of MO","Out of MT","Out of NE","Out of NV","Out of NH","Out of NJ","Out of NM","Out of NY","Out of NC","Out of ND","Out of OH","Out of OK","Out of OR","Out of PA","Out of RI","Out of SC","Out of SD","Out of TN","Out of TX","Out of UT","Out of VT","Out of VA","Out of WA","Out of WV","Out of WI","Out of WY","Unassigned",""] // use with array.includes()
+exports.Admin2Exclusions = ["Out of AK","Out of AZ","Out of AR","Out of CA","Out of CO","Out of CT","Out of DE","Out of AL","Out of DC","Out of FL","Out of GA","Out of HI","Out of ID","Out of IL","Out of IN","Out of IA","Out of KS","Out of KY","Out of LA","Out of ME","Out of MD","Out of MA","Out of MI","Out of MN","Out of MS","Out of MO","Out of MT","Out of NE","Out of NV","Out of NH","Out of NJ","Out of NM","Out of NY","Out of NC","Out of ND","Out of OH","Out of OK","Out of OR","Out of PA","Out of RI","Out of SC","Out of SD","Out of TN","Out of TX","Out of UT","Out of VT","Out of VA","Out of WA","Out of WV","Out of WI","Out of WY","Unassigned"] // use with array.includes()
+
+exports.locationExclusions = ["Diamond Princess", "Grand Princess", "MS Zaandam"]
 
 exports.allPops = getAllPops
 

@@ -1,7 +1,7 @@
 const globals = require('./globals');
-// const jhucsseScraper = require("./jhucsseTest")
 const allPops = require("./mergePopulationSources")
 const jhucsseScraper = require("./jhucsse")
+// const jhucsseScraper = require("./jhucsseTest")
 
 
 exports.create = async (limit = null) => {
@@ -66,6 +66,14 @@ exports.create = async (limit = null) => {
     // let jhuData = await jhucsseScraper.fetchData
 
     jhuData = jhuData.map(thisJhu => thisJhu.data.map(thisRow => {
+      let theseRowValues = Object.values(thisRow)
+      while(theseRowValues.length > 0) { // Don't love doing this as a while loop here on every row consumed, but the cruise ship locations can be indicated as several geographic levels of keys. An optimization is digging and finding the specific ones to check so every entry in a row doesn't need to be checked. 
+        if(globals.locationExclusions.includes(theseRowValues.pop())) {
+          return null
+        } else {
+          continue
+        }
+      }
       thisRow.metric = thisJhu.name === 'confirmed_US' || thisJhu.name === 'confirmed_global' ? 'cases' : 'deaths'
       if(thisRow.iso2) return { // indicates US specific cases or deaths spreadsheet
         ...thisRow, 
@@ -107,15 +115,15 @@ exports.create = async (limit = null) => {
             `${
               thisRow["Province_State"] === 'Louisiana' // Louisiana calls them "Parishes". Leaving these alone and removing "Parish" from the population data.
               ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}` 
-              : thisRow["Province_State"] === 'Alaska'
+              : thisRow["Province_State"] === 'Alaska' // Alaska calls them "Boroughs". Leaving these alone and removing "Boroughs" from the population data.
               ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
-              : thisRow["Admin2"] === 'Baltimore City'
+              : thisRow["Admin2"] === 'Baltimore City' // There is a Baltimore County and a Baltimore City...county. 
               ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
-              : thisRow["Admin2"] === 'St. Louis City'
+              : thisRow["Admin2"] === 'St. Louis City' // I guess there is the same thing for St. Louis as there is for Baltimore?
               ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
-              : thisRow["Admin2"] === 'Carson City'
+              : thisRow["Admin2"] === 'Carson City' //  And Carson City?
               ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
-              : thisRow["Admin2"].includes('County') // Alaska calls them "Boroughs". Leaving these alone and removing "Boroughs" from the population data.
+              : thisRow["Admin2"].includes('County') // ...could probably refactor this nested ternary into a hashmap in globals because it's like having all your dishes on the counter. Put them in the cupboards and get them when you need them amirite?!??
               ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
               : `${thisRow["Admin2"]} County, ${thisRow["Province_State"]}`
             }`
@@ -355,6 +363,7 @@ exports.create = async (limit = null) => {
     */
 
     return jhuDataAggregated
+    // globals.locationExclusions.forEach(thisLoc => console.info(findLocation(thisLoc, jhuDataAggregated[0].data)))
     // console.info(JSON.stringify(jhuDataAggregated[0].data.totals.daily))
     // console.info(JSON.stringify(globals.countryPopulations[0].fields))
   } catch(err) {
