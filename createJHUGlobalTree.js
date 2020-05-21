@@ -99,7 +99,49 @@ exports.create = async (limit = null) => {
           }
         }
       } 
-    })).flat().filter(el => el) // Filter out the US Global stub (it's a falsey value). We already have a row for the US calculated with the US county aggregates.
+    })
+    .filter(el => el) // Filter out the US Global stub (it's a falsey value). We already have a row for the US calculated with the US county aggregates.
+    .map(thisRow => {
+      if("Country/Region" in thisRow) { // indicates global cases or deaths spreadsheet
+        switch(thisRow["Country/Region"]) {
+          case 'China':
+            if(thisRow["Province/State"].length >= 1) { // If it's not China's overall location
+              return {
+                ...thisRow,
+                "Province/State": `${thisRow["Province/State"]}, China`
+              }
+            } else {
+              return { ...thisRow }
+            }
+            break
+          case 'Australia':
+            if(thisRow["Province/State"].length >= 1) { // If it's not Australia's overall location
+              return {
+                ...thisRow,
+                "Province/State": `${thisRow["Province/State"]}, Australia`
+              }
+            } else {
+              return { ...thisRow }
+            }
+            break
+          case 'Canada':
+            if(thisRow["Province/State"].length >= 1) { // If it's not Canada's overall location
+              return {
+                ...thisRow,
+                "Province/State": `${thisRow["Province/State"]}, Canada`
+              }
+            } else {
+              return { ...thisRow }
+            }
+            break
+          default: 
+            return { ...thisRow }
+            break
+        }
+      } else {
+        return { ...thisRow }
+      }
+    })).flat()
 
     const newJHUData = jhuData
     .map(thisRow => { return { ...thisRow, location: [ thisRow.continentName ] }})
