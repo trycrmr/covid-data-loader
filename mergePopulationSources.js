@@ -30,7 +30,7 @@ const getJSON = (async () => {
           break
         case 'chinaPopsByProvince':
           acc = { ...acc, ...data.reduce((acc, curr, currIdx, origArr) => {
-            acc[`${curr["Region"]}, China`] = Number(+(curr["2018"]) * 1000).toFixed(0)
+            acc[`${curr["Region"]}, China`] = Number(+(curr["2018"]) * 10000).toFixed(0)
             return acc
           }, {})}
           break
