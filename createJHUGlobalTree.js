@@ -150,7 +150,11 @@ exports.create = async (limit = null) => {
     .map(thisRow => { return thisRow["Province/State"] ? { ...thisRow, location: [ ...thisRow.location, thisRow["Province/State"]] } : { ...thisRow }})
     .map(thisRow => { 
       if(thisRow["Admin2"]) {
-        if(globals.Admin2Exclusions.includes(thisRow["Admin2"])) { // JHU data as some fill-ins where they didn't know the county (ex. "Out of NY")
+        if(globals.Admin2Exclusions.includes(thisRow["Admin2"]) || // JHU data as some fill-ins where they didn't know the county (ex. "Out of NY") 
+          ((thisRow["Province_State"] === 'New York' && thisRow["Admin2"] === 'Kings')  // JHU data has zero for Brooklyn because it's rolled up to New York, New York.
+          || (thisRow["Province_State"] === 'New York' && thisRow["Admin2"] === 'Richmond')) // JHU data has zero for Staten Island because it's rolled up to New York, New York.
+        ) 
+        { 
           return { ...thisRow }
         } else {
           return { ...thisRow, location: [ ...thisRow.location, 
@@ -165,9 +169,11 @@ exports.create = async (limit = null) => {
               ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
               : thisRow["Admin2"] === 'Carson City' //  And Carson City?
               ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
+              : thisRow["Admin2"] === 'New York' // JHU data has zeros for all NYC boroughs except New York, New York, which is technically New York City, which is technically not a county of a conglomerate of five counties, so it would be nice to have the data for the actually counties in New York City, but that might not be a thing because they don't have local governments, so here we are.
+              ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
               : thisRow["Admin2"].includes('County') // ...could probably refactor this nested ternary into a hashmap in globals because it's like having all your dishes on the counter. Put them in the cupboards and get them when you need them amirite?!??
               ? `${thisRow["Admin2"]}, ${thisRow["Province_State"]}`
-              : `${thisRow["Admin2"]} County, ${thisRow["Province_State"]}`
+              : `${thisRow["Admin2"]} County, ${thisRow["Province_State"]}` // Append " County" to all the other US counties because that's what the Census population data has.
             }`
           ]}
         }
@@ -408,6 +414,7 @@ exports.create = async (limit = null) => {
     // globals.locationExclusions.forEach(thisLoc => console.info(findLocation(thisLoc, jhuDataAggregated[0].data)))
     // console.info(JSON.stringify(jhuDataAggregated[0].data.totals.daily))
     // console.info(JSON.stringify(globals.countryPopulations[0].fields))
+    // console.info(JSON.stringify(jhuDataAggregated[0].data.subregions["North America"].subregions["United States"].subregions["New York"]))
   } catch(err) {
     console.error(err)
     return err
